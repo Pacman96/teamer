@@ -1,0 +1,15 @@
+.block {
+    display: flex;
+    border-radius: $radius;
+    flex: 1;
+
+    &.sm {
+        padding: $smallSpace;
+    }
+    &.md {
+        padding: $mediumSpace;
+    }
+    &.lg {
+        padding: $largeSpace;
+    }
+}

@@ -1,0 +1,32 @@
+.carousel {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+
+    > .carousel-item {
+        
+        // scroll-snap-align: start;
+        // flex-shrink: 0;
+        // transform-origin: center center;
+        // transform: scale(1);
+        // transition: transform 0.5s;
+        // position: relative;
+    }
+    &.spc-s {
+        > .carousel-item:not(:last-child) {
+            margin-right: $smallSpace;
+        }
+    }
+    &.spc-m {
+        > .carousel-item:not(:last-child) {
+            margin-right: $mediumSpace;
+        }
+    }
+    &.spc-l {
+        > .carousel-item:not(:last-child) {
+            margin-right: $largeSpace;
+        }
+    }
+}

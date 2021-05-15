@@ -1,0 +1,128 @@
+.ghost-bg:not(.disablable.disabled):not(.activable.active) {
+    background: $ghost;
+    color: $ghost_contrast;
+    &.hoverable:hover {
+        background: $ghost_hover;
+    }
+}
+.light-bg:not(.disablable.disabled):not(.activable.active) {
+    background: $light1;
+    color: $light1_contrast;
+    &.hoverable:hover {
+        background: $light1_hover;
+    }
+}
+.dark-bg:not(.disablable.disabled) {
+    background: $dark2;
+    color: $dark2_contrast;
+    &.hoverable:hover {
+        background: $dark2_hover;
+    }
+    &.activable.active {
+        background: $primary;
+        color: $primary_contrast;
+    }
+}
+.primary-bg:not(.disablable.disabled):not(.activable.active) {
+    background: $primary;
+    color: $primary_contrast;
+    &.hoverable:hover {
+        background: $primary_hover;
+    }
+}
+.secondary-bg:not(.disablable.disabled):not(.activable.active) {
+    background: $secondary;
+    color: $secondary_contrast;
+    &.hoverable:hover {
+        background: $secondary_hover;
+    }
+}
+.success-bg:not(.disablable.disabled):not(.activable.active) {
+    background: $success;
+    color: $success_contrast;
+    &.hoverable:hover {
+        background: $success_hover;
+    }
+}
+.infos-bg:not(.disablable.disabled):not(.activable.active) {
+    background: $infosColor;
+    color: $infosColorContrast;
+    &.hoverable:hover {
+        background: $light1_hover;
+    }
+}
+.warning-bg:not(.disablable.disabled):not(.activable.active) {
+    background: $warning;
+    color: $warning_contrast;
+    &.hoverable:hover {
+        background: $warning_hover;
+    }
+}
+.danger-bg:not(.disablable.disabled):not(.activable.active) {
+    background: $danger;
+    color: $danger_contrast;
+    &.hoverable:hover {
+        background: $danger_hover;
+    }
+}
+
+
+.hoverable {
+    cursor: pointer;
+}
+.activable {
+    cursor: pointer;
+    &.active {
+        background: $dark2;
+        color: $dark2_contrast;
+    }
+}
+.disablable.disabled {
+    background: #cacaca;
+    color: $dark2_contrast;
+    pointer-events: none;
+    cursor: not-allowed;
+
+}
+
+.laodable,
+.disablable {
+    position: relative;
+    > .loader,
+    > .disabler {
+        display: none;
+    }
+}
+.loadable.loading {
+    cursor: wait;
+    > .loader {
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 50%;
+        right: 50%;
+        transform: translate(50%, -50%);
+    }
+    >:not(.loader) {
+        color: transparent;
+        -ms-user-select: none;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -webkit-touch-callout: none;
+        -khtml-user-select: none;
+        user-select: none;
+    }
+}
+
+
+.pad-s {
+    padding: $smallSpace;
+}
+.pad-m {
+    padding: $mediumSpace;
+}
+.pad-l {
+    padding: $largeSpace;
+}

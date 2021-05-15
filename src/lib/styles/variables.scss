@@ -1,0 +1,96 @@
+/**
+*   COLORS
+**/
+$pageBackground: #FAFBFD;
+$radius : 6px;
+// variations //
+
+// backgrounds
+$ghost: transparent;
+$light1: #ffffff;
+$light2: #D3DAE6;
+$dark1: #000000;
+$dark2: #343741;
+$dark3: #69707D;
+$dark4: #4b576d;
+$primary: #0077CC;
+$secondary: #F04E98;
+$success: #00BFB3;
+$warning: #FEC514;
+$danger: #BD271E;
+
+// Contrast
+$ghost_contrast: $dark1;
+$light1_contrast: $dark1;
+$light2_contrast: #D3DAE6;
+$dark1_contrast: #343741;
+$dark2_contrast: $light1;
+$dark3_contrast: #4b576d;
+$primary_contrast: $light1;
+$secondary_contrast: $light1;
+$success_contrast: $light1;
+$warning_contrast: $light1;
+$danger_contrast: $light1;
+// hover
+$ghost_hover: #00000010;
+$light1_hover: #ffffffba;
+$light2_hover: #D3DAE6ba;
+$dark1_hover: #000000ba;
+$dark2_hover: #343741ba;
+$dark3_hover: #69707Dba;
+$dark4_hover: #4b576dba;
+$primary_hover: #0077CCba;
+$secondary_hover: #F04E98ba;
+$success_hover: #00BFB3ba;
+$warning_hover: #FEC514ba;
+$danger_hover: #BD271Eba;
+
+// ////////////////////////////////
+$buttonRadius: 6px;
+
+// Colors : variation
+
+$formBackground: white;
+$formContrast: black;
+$formExtraBackground: #f9f9f9;
+$formExtraContrast: black;
+
+
+$primaryColor: #2f54eb;
+$primaryColorContrast: #fff;
+$primaryColorHover: #1d39c4;
+$primaryColorDisabled: #597ef7;
+
+$secondaryColor: #722ed1;
+$secondaryColorContrast: #fff;
+$secondaryColorHover: #531dab;
+$secondaryColorDisabled: #9254de;
+
+$warningColor: #fa541c;
+$warningColorContrast: #fff;
+$warningColorHover: #d4380d;
+$warningColorDisabled: #ff7a45;
+
+$dangerColor: #f5222d;
+$dangerColorContrast: #fff;
+$dangerColorHover: #cf1322;
+$dangerColorDisabled: #ff4d4f;
+
+$successColor: #52c41a;
+$successColorContrast: #fff;
+$successColorHover: #389e0d;
+$successColorDisabled: #73d13d;
+
+$infosColor: #13c2c2;
+$infosColorContrast: #fff;
+$infosColorHover: #08979c;
+$infosColorDisabled: #36cfc9;
+
+// Sizes : width,height, font sizes
+$smallHeight: 28px;
+$mediumHeight: 36px;
+$largeHeight: 48px;
+
+$smallSpace: 8px;
+$mediumSpace: 12px;
+$largeSpace: 16px;

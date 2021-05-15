@@ -1,0 +1,31 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+@import './breakpoints.scss';
+@import './variables.scss';
+@import './sets.scss';
+
+
+@import '../layout/layout.scss';
+@import '../button/button.scss';
+@import '../form/form.scss';
+@import '../block/block.scss';
+@import '../carousel/carousel.scss';
+@import '../cards/cards.scss';
+
+
+body {
+    margin: 0;
+    font-size: 14px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}

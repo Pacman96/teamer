@@ -1,0 +1,28 @@
+.page {
+    min-height: inherit;
+    &.centered {
+        display: flex;
+        flex-direction: column;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+.page > .head {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 1;
+    margin-bottom: 30px;
+    > .title {
+        font-size: 30px;
+        @include respond-to('small') {
+            display: flex;
+            flex: 1;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+}

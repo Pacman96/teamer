@@ -1,0 +1,143 @@
+input,
+textarea,
+select {
+    outline: unset;
+    border: unset;
+    font-size: inherit;
+    border-radius: unset;
+}
+
+// .checkbox {
+//     cursor: pointer;
+//     &:hover {
+//         background: $formExtraBackground;
+//     }
+//     &.checked {
+//         > .label {
+//             background: $secondaryColor;
+//             color: $secondaryColorContrast;
+//             &:hover {
+//                 background: $secondaryColorHover;
+//             }
+//         }
+//     }
+// }
+
+.textInput,
+.numericInput,
+.longTextInput,
+.checkbox,
+.select {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: $radius;
+    position: relative;
+    > .label {
+        display: flex;
+        align-items: center;
+    }
+    > input,
+    > .label {
+        height: inherit;
+        flex: 1;
+        color: inherit;
+        background: inherit;
+        width: -webkit-fill-available;
+    }
+    > .sfx,
+    > .pfx {
+        height: inherit;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #0000000a;
+    }
+    :not(.loader):first-child {
+        border-top-left-radius: inherit;
+        border-bottom-left-radius: inherit;
+    }
+    :not(.loader):last-child {
+        border-top-right-radius: inherit;
+        border-bottom-right-radius: inherit;
+    }
+}
+/** Sizes **/
+.longTextInput.sm {
+    min-height: $smallHeight;
+    padding: $smallSpace;
+}
+.longTextInput.md {
+    min-height: $mediumHeight;
+    padding: $mediumSpace
+}
+.longTextInput.lg {
+    min-height: $largeHeight;
+    padding: $largeSpace;
+}
+.textInput.sm,
+.numericInput.sm,
+.checkbox.sm,
+.select.sm {
+    height: $smallHeight;
+    min-height: $smallHeight;
+    max-height: $smallHeight;
+    > input,
+    .label,
+    option {
+        padding-left: $smallSpace;
+        padding-right: $smallSpace;
+    }
+    > .pfx {
+        padding-left: $smallSpace;
+        padding-right: $smallSpace;
+    }
+    > .sfx {
+        padding-left: $smallSpace;
+        padding-right: $smallSpace;
+    }
+}
+.textInput.md,
+.numericInput.md,
+.checkbox.md,
+.select.md {
+    height: $mediumHeight;
+    min-height: $mediumHeight;
+    max-height: $mediumHeight;
+    > input,
+    .label,
+    option {
+        padding-left: $mediumSpace;
+        padding-right: $mediumSpace;
+    }
+    > .pfx {
+        padding-left: $mediumSpace;
+        padding-right: $mediumSpace;
+    }
+    > .sfx {
+        padding-left: $mediumSpace;
+        padding-right: $mediumSpace;
+    }
+}
+.textInput.lg,
+.numericInput.lg,
+.checkbox.lg,
+.select.lg {
+    height: $largeHeight;
+    min-height: $largeHeight;
+    max-height: $largeHeight;
+    > input,
+    .label {
+        padding-left: $largeSpace;
+        padding-right: $largeSpace;
+    }
+    > .pfx {
+        padding-left: $largeSpace;
+        padding-right: $largeSpace;
+    }
+    > .sfx {
+        padding-left: $largeSpace;
+        padding-right: $largeSpace;
+    }
+}

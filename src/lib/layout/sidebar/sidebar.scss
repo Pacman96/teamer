@@ -1,0 +1,126 @@
+.layout.fixedHeader {
+    .sidebar {
+        top: $headerHeight;
+    }
+}
+.layout.noHeader {
+    .sidebar {
+        top: 0;
+    }
+}
+.layout.noSidebar {
+    .sidebar {
+        display: none;
+    }
+    .sidebar-toogler {
+        display: none;
+    }
+}
+
+.sidebar {
+    background: $dark2;
+    // color: $dark2_contrast;
+    z-index: 999;
+    min-width: $sidebarWidth;
+    max-width: $sidebarWidth;
+    width: $sidebarWidth;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    @include respond-to('small') {
+        display: none;
+        height: 100vh;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        max-width: 80%;
+        min-width: 80%;
+        &.open {
+            display: flex;
+        }
+    }
+}
+.sidebar-toogler {
+    @include respond-to('small') {
+        display: flex !important;
+    }
+    display: none !important;
+}
+
+// Content
+
+.sidebar-wrapper {
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    height: -webkit-fill-available;
+    width: 100%;
+}
+
+.sidebar-head {
+    padding: 24px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+    font-size: larger;
+}
+.sidebar-body {
+    flex: 1;
+    overflow-y: overlay;
+}
+
+.sidebar-foot {
+    max-height: $headerHeight;
+}
+
+
+// Menu
+
+.menuGroup {
+    margin-bottom: $largeSpace;
+}
+.menu-title {
+    text-align: center;
+    color: white;
+    margin-bottom: $smallSpace;
+
+}
+.menuItem.sm {
+    height: $smallHeight;
+}
+.menuItem.md {
+    height: $mediumHeight;
+}
+.menuItem.lg {
+    height: $largeHeight;
+}
+.menuItem {
+    cursor: pointer;
+    background: $menuItemBackground;
+    color: $menuItemTextColor;
+    .ppfx {
+        display: none;
+        color: white;
+        font-weight: 600;
+    }
+    .ssfx {
+        color: white;
+    }
+    &:hover {
+        background: $menuItemBackground_hover;
+        color: $menuItemTextColor_hover;
+    }
+    &.active {
+        .ppfx {
+            display: flex;
+        }
+    }
+}
+
+
+.menuGroup-children {
+    padding-left: $mediumSpace;
+
+}

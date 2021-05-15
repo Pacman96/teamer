@@ -1,0 +1,212 @@
+$breakpoints: (
+    'small': (max-width: 767px),
+    'medium': (max-width: 992px),
+    'large': (max-width: 1200px)
+) !default;
+
+// / Mixin to manage responsive breakpoints
+// / @author Hugo Giraudel
+// / @param {String} $breakpoint - Breakpoint name
+// / @require $breakpoints
+@mixin respond-to($breakpoint) {
+    // If the key exists in the map
+    @if map-has-key($breakpoints, $breakpoint) {
+        // Prints a media query based on the value
+        @media #{inspect(map-get($breakpoints, $breakpoint))} {
+            @content;
+        }
+    }
+
+    // If the key doesn't exist in the map
+@else
+    {
+        @warn "Unfortunately, no value could be retrieved from `#{$breakpoint}`. " + "Available breakpoints are: #{map-keys($breakpoints)}.";
+    }
+}
+
+// Colors Palette
+$grey: #e1e1e1;
+$grey-light-10: mix(white, $grey, 10%);
+$grey-light-20: mix(white, $grey, 20%);
+$grey-light-30: mix(white, $grey, 30%);
+$grey-light-40: mix(white, $grey, 40%);
+$grey-light-50: mix(white, $grey, 50%);
+$grey-light-60: mix(white, $grey, 60%);
+$grey-light-70: mix(white, $grey, 70%);
+$grey-light-80: mix(white, $grey, 80%);
+$grey-light-90: mix(white, $grey, 90%);
+$grey-light-100: mix(white, $grey, 100%);
+$grey-dark-10: mix(black, $grey, 10%);
+$grey-dark-20: mix(black, $grey, 20%);
+$grey-dark-30: mix(black, $grey, 30%);
+$grey-dark-40: mix(black, $grey, 40%);
+$grey-dark-50: mix(black, $grey, 50%);
+$grey-dark-60: mix(black, $grey, 60%);
+$grey-dark-70: mix(black, $grey, 70%);
+$grey-dark-80: mix(black, $grey, 80%);
+$grey-dark-90: mix(black, $grey, 90%);
+$grey-dark-100: mix(black, $grey, 100%);
+
+$primary: #0d47a1;
+$primary-light-10: mix(white, $primary, 10%);
+$primary-light-20: mix(white, $primary, 20%);
+$primary-light-30: mix(white, $primary, 30%);
+$primary-light-40: mix(white, $primary, 40%);
+$primary-light-50: mix(white, $primary, 50%);
+$primary-light-60: mix(white, $primary, 60%);
+$primary-light-70: mix(white, $primary, 70%);
+$primary-light-80: mix(white, $primary, 80%);
+$primary-light-90: mix(white, $primary, 90%);
+$primary-light-100: mix(white, $primary, 100%);
+$primary-dark-10: mix(black, $primary, 10%);
+$primary-dark-20: mix(black, $primary, 20%);
+$primary-dark-30: mix(black, $primary, 30%);
+$primary-dark-40: mix(black, $primary, 40%);
+$primary-dark-50: mix(black, $primary, 50%);
+$primary-dark-60: mix(black, $primary, 60%);
+$primary-dark-70: mix(black, $primary, 70%);
+$primary-dark-80: mix(black, $primary, 80%);
+$primary-dark-90: mix(black, $primary, 90%);
+$primary-dark-100: mix(black, $primary, 100%);
+
+$secondary: #9933CC;
+$secondary-light-10: mix(white, $secondary, 10%);
+$secondary-light-20: mix(white, $secondary, 20%);
+$secondary-light-30: mix(white, $secondary, 30%);
+$secondary-light-40: mix(white, $secondary, 40%);
+$secondary-light-50: mix(white, $secondary, 50%);
+$secondary-light-60: mix(white, $secondary, 60%);
+$secondary-light-70: mix(white, $secondary, 70%);
+$secondary-light-80: mix(white, $secondary, 80%);
+$secondary-light-90: mix(white, $secondary, 90%);
+$secondary-light-100: mix(white, $secondary, 100%);
+$secondary-dark-10: mix(black, $secondary, 10%);
+$secondary-dark-20: mix(black, $secondary, 20%);
+$secondary-dark-30: mix(black, $secondary, 30%);
+$secondary-dark-40: mix(black, $secondary, 40%);
+$secondary-dark-50: mix(black, $secondary, 50%);
+$secondary-dark-60: mix(black, $secondary, 60%);
+$secondary-dark-70: mix(black, $secondary, 70%);
+$secondary-dark-80: mix(black, $secondary, 80%);
+$secondary-dark-90: mix(black, $secondary, 90%);
+$secondary-dark-100: mix(black, $secondary, 100%);
+
+$danger: #CC0000;  
+$danger-light-10: mix(white, $danger, 10%);
+$danger-light-20: mix(white, $danger, 20%);
+$danger-light-30: mix(white, $danger, 30%);
+$danger-light-40: mix(white, $danger, 40%);
+$danger-light-50: mix(white, $danger, 50%);
+$danger-light-60: mix(white, $danger, 60%);
+$danger-light-70: mix(white, $danger, 70%);
+$danger-light-80: mix(white, $danger, 80%);
+$danger-light-90: mix(white, $danger, 90%);
+$danger-light-100: mix(white, $danger, 100%);
+$danger-dark-10: mix(black, $danger, 10%);
+$danger-dark-20: mix(black, $danger, 20%);
+$danger-dark-30: mix(black, $danger, 30%);
+$danger-dark-40: mix(black, $danger, 40%);
+$danger-dark-50: mix(black, $danger, 50%);
+$danger-dark-60: mix(black, $danger, 60%);
+$danger-dark-70: mix(black, $danger, 70%);
+$danger-dark-80: mix(black, $danger, 80%);
+$danger-dark-90: mix(black, $danger, 90%);
+$danger-dark-100: mix(black, $danger, 100%);
+
+$warning: #FF8800; 
+// Light shades 
+$warning-light-10: mix(white, $warning, 10%);
+$warning-light-20: mix(white, $warning, 20%);
+$warning-light-30: mix(white, $warning, 30%);
+$warning-light-40: mix(white, $warning, 40%);
+$warning-light-50: mix(white, $warning, 50%);
+$warning-light-60: mix(white, $warning, 60%);
+$warning-light-70: mix(white, $warning, 70%);
+$warning-light-80: mix(white, $warning, 80%);
+$warning-light-90: mix(white, $warning, 90%);
+$warning-light-100: mix(white, $warning, 100%);
+$warning-dark-10: mix(black, $warning, 10%);
+$warning-dark-20: mix(black, $warning, 20%);
+$warning-dark-30: mix(black, $warning, 30%);
+$warning-dark-40: mix(black, $warning, 40%);
+$warning-dark-50: mix(black, $warning, 50%);
+$warning-dark-60: mix(black, $warning, 60%);
+$warning-dark-70: mix(black, $warning, 70%);
+$warning-dark-80: mix(black, $warning, 80%);
+$warning-dark-90: mix(black, $warning, 90%);
+$warning-dark-100: mix(black, $warning, 100%);
+
+$success: #007E33; 
+$success-light-10: mix(white, $success, 10%);
+$success-light-20: mix(white, $success, 20%);
+$success-light-30: mix(white, $success, 30%);
+$success-light-40: mix(white, $success, 40%);
+$success-light-50: mix(white, $success, 50%);
+$success-light-60: mix(white, $success, 60%);
+$success-light-70: mix(white, $success, 70%);
+$success-light-80: mix(white, $success, 80%);
+$success-light-90: mix(white, $success, 90%);
+$success-light-100: mix(white, $success, 100%);
+$success-dark-10: mix(black, $success, 10%);
+$success-dark-20: mix(black, $success, 20%);
+$success-dark-30: mix(black, $success, 30%);
+$success-dark-40: mix(black, $success, 40%);
+$success-dark-50: mix(black, $success, 50%);
+$success-dark-60: mix(black, $success, 60%);
+$success-dark-70: mix(black, $success, 70%);
+$success-dark-80: mix(black, $success, 80%);
+$success-dark-90: mix(black, $success, 90%);
+$success-dark-100: mix(black, $success, 100%);
+
+$infos: #0099CC; 
+$infos-light-10: mix(white, $infos, 10%);
+$infos-light-20: mix(white, $infos, 20%);
+$infos-light-30: mix(white, $infos, 30%);
+$infos-light-40: mix(white, $infos, 40%);
+$infos-light-50: mix(white, $infos, 50%);
+$infos-light-60: mix(white, $infos, 60%);
+$infos-light-70: mix(white, $infos, 70%);
+$infos-light-80: mix(white, $infos, 80%);
+$infos-light-90: mix(white, $infos, 90%);
+$infos-light-100: mix(white, $infos, 100%);
+$infos-dark-10: mix(black, $infos, 10%);
+$infos-dark-20: mix(black, $infos, 20%);
+$infos-dark-30: mix(black, $infos, 30%);
+$infos-dark-40: mix(black, $infos, 40%);
+$infos-dark-50: mix(black, $infos, 50%);
+$infos-dark-60: mix(black, $infos, 60%);
+$infos-dark-70: mix(black, $infos, 70%);
+$infos-dark-80: mix(black, $infos, 80%);
+$infos-dark-90: mix(black, $infos, 90%);
+$infos-dark-100: mix(black, $infos, 100%);
+
+// Spacings and Dimensions
+
+$space_xs: 4px;
+$space_sm: 8px;
+$space_md: 12px;
+$space_lg: 16px;
+$space_xl: 20px;
+$space_xxl: 24px;
+
+$height_xs: 14px;
+$height_sm: 28px;
+$height_md: 36px;
+$height_lg: 48px;
+$height_xl: 62px;
+$height_xxl: 76px;
+
+$radius: 20px;
+
+$ghost: transparent;
+$light1: #ffffff;
+$light2: #D3DAE6;
+$dark1: #000000;
+$dark2: #343741;
+$dark3: #69707D;
+$dark4: #4b576d;
+// $primary: #0077CC;
+// $secondary: #F04E98;
+// $success: #00BFB3;
+// $warning: #FEC514;
+// $danger: #BD271E;

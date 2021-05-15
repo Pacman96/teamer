@@ -1,0 +1,36 @@
+// Theme
+
+
+.button {
+    margin: 10px;
+    border: 2px solid transparent;
+    font-weight: 600;
+    position: relative;
+    display: flex;
+    align-items: center;
+    background-color: transparent;
+    color: inherit;
+
+    &:not(:disabled) {
+        cursor: pointer;
+        pointer-events: all;
+    }
+    &.h-xs > .content {
+        padding: 0 $space_xs;
+    }
+    &.h-sm > .content {
+        padding: 0 $space_sm;
+    }
+    &.h-md > .content {
+        padding: 0 $space_md;
+    }
+    &.h-lg > .content {
+        padding: 0 $space_lg;
+    }
+    &.h-xl > .content {
+        padding: 0 $space_xl;
+    }
+    &.h-xxl > .content {
+        padding: 0 $space_xxl;
+    }
+}

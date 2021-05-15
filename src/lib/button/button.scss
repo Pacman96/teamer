@@ -1,0 +1,96 @@
+
+
+button {
+    outline: unset;
+    border: unset;
+    font-size: inherit;
+    border-radius: unset;
+}
+
+.btn-wrapper{
+    >.label{
+        flex: 1;
+        &:last-child:not(:first-child){
+            margin-left: 10px;
+        }
+        &:first-child:not(:last-child){
+            margin-right: 10px;
+        }
+        &:not(:first-child):not(:last-child){
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+    }
+}
+
+.btn {
+    border-radius: $radius;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    > .btn-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: 1;
+        // text-align: left;
+    }
+    > .icon-wrapper {
+        display: none;
+        align-items: center;
+        justify-content: center;
+    }
+    &.block {
+        flex: 1;
+        width: 100%;
+    }
+    &.iconOnly {
+        > .icon-wrapper {
+            display: flex;
+        }
+        > .btn-wrapper {
+            display: none;
+        }
+    }
+}
+
+/** sizes **/
+.btn.sm {
+    height: $smallHeight;
+    min-height: $smallHeight;
+    max-height: $smallHeight;
+    min-width: $smallHeight;
+    padding-left: $smallSpace;
+    padding-right: $smallSpace;
+    &.iconOnly {
+        width: $smallHeight;
+        max-width: $smallHeight;
+        padding: 0;
+    }
+}
+.btn.md {
+    height: $mediumHeight;
+    min-height: $mediumHeight;
+    max-height: $mediumHeight;
+    min-width: $mediumHeight;
+    padding-left: $mediumSpace;
+    padding-right: $mediumSpace;
+    &.iconOnly {
+        width: $mediumHeight;
+        max-width: $mediumHeight;
+        padding: 0;
+    }
+}
+.btn.lg {
+    height: $largeHeight;
+    min-height: $largeHeight;
+    max-height: $largeHeight;
+    min-width: $largeHeight;
+    padding-left: $largeSpace;
+    padding-right: $largeSpace;
+    &.iconOnly {
+        width: $largeHeight;
+        max-width: $largeHeight;
+        padding: 0;
+    }
+}

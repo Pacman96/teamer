@@ -1,0 +1,461 @@
+// Themes
+.primary {
+    &.filled {
+        background-color: $primary;
+        color: white;
+        &.isActive,
+        &:hover {
+            background-color: $primary-dark-40;
+        }
+        &.isDisabled {
+            background-color: $grey-dark-40;
+        }
+    }
+    &.outlined {
+        border-color: $primary;
+        color: $primary;
+        &.isActive,
+        &:hover {
+            border-color: $primary-dark-40;
+            color: $primary-dark-40;
+        }
+        &.isDisabled {
+            border-color: $grey-dark-40;
+            color: $grey-dark-40;
+        }
+    }
+    &.ghost {
+        color: $primary;
+        &.isActive,
+        &:hover {
+            background-color: $primary-light-90;
+        }
+        &.isDisabled {
+            color: $grey-dark-30;
+        }
+    }
+}
+.secondary {
+    &.filled {
+        background-color: $secondary;
+        color: white;
+        &.isActive,
+        &:hover {
+            background-color: $secondary-dark-40
+        }
+        &.isDisabled {
+            background-color: $grey-dark-40
+        }
+    }
+    &.outlined {
+        border-color: $secondary;
+        color: $secondary;
+        &.isActive,
+        &:hover {
+            border-color: $secondary-dark-40;
+            color: $secondary-dark-40;
+        }
+        &.isDisabled {
+            border-color: $grey-dark-40;
+            color: $grey-dark-40;
+        }
+    }
+    &.ghost {
+        color: $secondary;
+        &.isActive,
+        &:hover {
+            background-color: $secondary-light-90;
+        }
+        &.isDisabled {
+            color: $grey-dark-40;
+        }
+    }
+}
+.danger {
+    &.filled {
+        background-color: $danger;
+        color: white;
+        &.isActive,
+        &:hover {
+            background-color: $danger-dark-40;
+        }
+        &.isDisabled {
+            background-color: $grey-dark-40;
+        }
+    }
+    &.outlined {
+        border-color: $danger;
+        color: $danger;
+        &.isActive,
+        &:hover {
+            border-color: $danger-dark-40;
+            color: $danger-dark-40;
+        }
+        &.isDisabled {
+            border-color: $grey-dark-40;
+            color: $grey-dark-40;
+        }
+    }
+    &.ghost {
+        color: $danger;
+        &.isActive,
+        &:hover {
+            background-color: $danger-light-90;
+        }
+        &.isDisabled {
+            color: $grey-dark-40;
+        }
+    }
+}
+.warning {
+    &.filled {
+        background-color: $warning;
+        color: white;
+        &.isActive,
+        &:hover {
+            background-color: $warning-dark-40;
+        }
+        &.isDisabled {
+            background-color: $grey-dark-40;
+        }
+    }
+    &.outlined {
+        border-color: $warning;
+        color: $warning;
+        &.isActive,
+        &:hover {
+            border-color: $warning-dark-40;
+            color: $warning-dark-40;
+        }
+        &.isDisabled {
+            border-color: $grey-dark-40;
+            color: $grey-dark-40;
+        }
+    }
+    &.ghost {
+        color: $warning;
+        &.isActive,
+        &:hover {
+            background-color: $warning-light-90;
+        }
+        &.isDisabled {
+            color: $grey-dark-40;
+        }
+    }
+}
+.success {
+    &.filled {
+        background-color: $success;
+        color: white;
+        &.isActive,
+        &:hover {
+            background-color: $success-dark-40;
+        }
+        &.isDisabled {
+            background-color: $grey-dark-40;
+        }
+    }
+    &.outlined {
+        border-color: $success;
+        color: $success;
+        &.isActive,
+        &:hover {
+            border-color: $success-dark-40;
+            color: $success-dark-40;
+        }
+        &.isDisabled {
+            border-color: $grey-dark-40;
+            color: $grey-dark-40;
+        }
+    }
+    &.ghost {
+        color: $success;
+        &.isActive,
+        &:hover {
+            background-color: $success-light-90;
+        }
+        &.isDisabled {
+            color: $grey-dark-40;
+        }
+    }
+}
+.infos {
+    &.filled {
+        background-color: $infos;
+        color: white;
+        &.isActive,
+        &:hover {
+            background-color: $infos-dark-40;
+        }
+        &.isDisabled {
+            background-color: $grey-dark-40;
+        }
+    }
+    &.outlined {
+        border-color: $infos;
+        color: $infos;
+        &.isActive,
+        &:hover {
+            border-color: $infos-dark-40;
+            color: $infos-dark-40;
+        }
+        &.isDisabled {
+            border-color: $grey-dark-40;
+            color: $grey-dark-40;
+        }
+    }
+    &.ghost {
+        color: $infos;
+        &.isActive,
+        &:hover {
+            background-color: $infos-light-90;
+        }
+        &.isDisabled {
+            color: $grey-dark-40;
+        }
+    }
+}
+.light {
+    &.filled {
+        background-color: $grey;
+        color: $grey-dark-100;
+        &.isActive,
+        &:hover {
+            background-color: $grey-light-90;
+        }
+        &.isDisabled {
+            background-color: $grey-dark-40;
+        }
+    }
+    &.outlined {
+        border-color: $grey;
+        color: $grey;
+        &.isActive,
+        &:hover {
+            border-color: $grey-light-80;
+            color: $grey-light-80;
+        }
+        &.isDisabled {
+            border-color: $grey-dark-40;
+            color: $grey-dark-40;
+        }
+    }
+    &.ghost {
+        color: $grey-light-100;
+        &.isActive,
+        &:hover {
+            background-color: $grey-dark-90;
+        }
+        &.isDisabled {
+            color: $grey-dark-40;
+        }
+    }
+}
+.dark {
+    &.filled {
+        background-color: $grey;
+        color: $grey-dark-100;
+        &.isActive,
+        &:hover {
+            background-color: $grey-dark-10;
+        }
+        &.isDisabled {
+            background-color: $grey-dark-40;
+        }
+    }
+    &.outlined {
+        border-color: $grey-dark-70;
+        color: $grey-dark-70;
+        &.isActive,
+        &:hover {
+            border-color: $grey-dark-100;
+            color: $grey-dark-100;
+        }
+        &.isDisabled {
+            border-color: $grey-dark-40;
+            color: $grey-dark-40;
+        }
+    }
+    &.ghost {
+        color: $grey-dark-100;
+        &.isActive,
+        &:hover {
+            background-color: $grey-light-70;
+        }
+        &.isDisabled {
+            color: $grey-dark-40;
+        }
+    }
+}
+
+// PADDINGS
+.pad-xs {
+    padding: $space_xs;
+}
+.pad-sm {
+    padding: $space_sm;
+}
+.pad-md {
+    padding: $space_md;
+}
+.pad-lg {
+    padding: $space_lg;
+}
+.pad-xl {
+    padding: $space_xl;
+}
+.pad-xxl {
+    padding: $space_xxl;
+}
+.padLR-xs {}
+.padLR-sm {}
+.padLR-md {}
+.padLR-lg {}
+.padLR-xl {}
+.padLR-xxl {}
+.padTB-xs {}
+.padTB-sm {}
+.padTB-md {}
+.padTB-lg {}
+.padTB-xl {}
+.padTB-xxl {}
+// MARGINS
+.mar-xs {}
+.mar-sm {}
+.mar-md {}
+.mar-lg {}
+.mar-xl {}
+.mar-xxl {}
+.marLR-xs {}
+.marLR-sm {}
+.marLR-md {}
+.marLR-lg {}
+.marLR-xl {}
+.marLR-xxl {}
+.marTB-xs {}
+.marTB-sm {}
+.marTB-md {}
+.marTB-lg {}
+.marTB-xl {}
+.marTB-xxl {}
+
+// elvations
+.elvation-xs {}
+.elvation-sm {}
+.elvation-md {}
+.elvation-lg {}
+.elvation-xl {}
+.elvation-xxl {}
+
+// Heights
+.h-xs {
+    min-height: $height_xs;
+    max-height: $height_xs;
+}
+.h-sm {
+    min-height: $height_sm;
+    max-height: $height_sm;
+}
+.h-md {
+    min-height: $height_md;
+    max-height: $height_md;
+}
+.h-lg {
+    min-height: $height_lg;
+    max-height: $height_lg;
+}
+
+.h-xl {
+    min-height: $height_xl;
+    max-height: $height_xl;
+}
+.h-xxl {
+    min-height: $height_xxl;
+    max-height: $height_xxl;
+}
+
+// Widths
+.w-xs {}
+.w-sm {}
+.w-md {}
+.w-lg {}
+.w-xl {}
+.w-xxl {}
+
+// Roundness
+.square {
+    border-radius: 0;
+}
+.curved {
+    border-radius: $radius;
+}
+.round {
+    border-radius: 100%;
+}
+
+// States
+.isDisabled {
+    cursor: not-allowed !important;
+    pointer-events: none !important;
+}
+@keyframes fa-spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.isLoading {
+    @extend %fa-icon;
+    @extend .fas;
+    > .content {
+        color: transparent !important;
+    }
+    &::before {
+        cursor: inherit;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        content: fa-content(#{$fa-var-spinner});
+        animation: fa-spin 2s infinite linear;
+    }
+
+}
+.isActive {
+    background-color: red;
+    color: white;
+}
+.isLocked {
+    @extend %fa-icon;
+    @extend .fas;
+    cursor: not-allowed !important;
+    pointer-events: none !important;
+    > .content {
+        color: transparent !important
+    }
+    &::before {
+        cursor: inherit;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        content: fa-content($fa-var-lock);
+        border-radius: inherit;
+    }
+}
