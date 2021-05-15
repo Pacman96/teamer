@@ -1,5 +1,5 @@
-import { createContext, useEffect, useState, useContext } from 'react'
-import firebase from '../services/firebase'
+import { createContext, useEffect, useState, useContext, Suspense } from 'react'
+import { firebase } from '../services/auth'
 
 const AssetsContext = createContext();
 
@@ -7,7 +7,7 @@ export function useAssets() {
     return useContext(AssetsContext)
 }
 
-export const AssetsProvider = ({children}) => {
+export const AssetsProvider = ({ children }) => {
     const [loadingAttributes, setLoadingAttributes] = useState(true)
     const [loadingCollections, setLoadingCollections] = useState(true)
     const [attributes, setAttributes] = useState([])
@@ -46,7 +46,10 @@ export const AssetsProvider = ({children}) => {
 
     return (
         <AssetsContext.Provider value={value}>
+            <Suspense fallback={<div> Loading attributes</div>}>
             {(!loadingAttributes && !loadingCollections) && children}
+
+            </Suspense>
         </AssetsContext.Provider>
     );
 }

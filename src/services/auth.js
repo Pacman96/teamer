@@ -1,8 +1,24 @@
-
 import { useEffect, useState, createContext, useContext, Suspense } from "react";
-import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
+import {  Switch, Route, Redirect } from "react-router-dom";
+import fire from "firebase/app";
 
-import firebase from "../services/firebase";
+import "firebase/auth";
+import "firebase/firestore";
+import "firebase/storage";
+
+
+fire.initializeApp({
+    apiKey: "AIzaSyC0REzlbGmfPBAHGDl2qZ_O_aZ27TkFZ2g",
+    authDomain: "teamer-74af7.firebaseapp.com",
+    projectId: "teamer-74af7",
+    storageBucket: "teamer-74af7.appspot.com",
+    messagingSenderId: "182571467195",
+    appId: "1:182571467195:web:77df1d5541daa27c5f049e",
+    measurementId: "G-K2ZYSH91SM"
+});
+
+export const firebase = fire
+
 
 const fireauth = firebase.auth()
 const firestore = firebase.firestore()
@@ -155,33 +171,31 @@ export const Router = ({
     bottom,
 }) => {
     const { isAuthorized } = useAuth()
-    return <BrowserRouter>
-        <PreWrapper>
-            <Suspense fallback={<div> Loading route </div>}>
-                {top}
-                <Switch>
-                    {routes.map(({ id, title, path, component: Component, authenticated, roles, authorizations }) => {
-                        const shouldCheckRoles = (Array.isArray(roles) || typeof roles === 'string') && roles.length > 0
-                        const shouldCheckAuthorizations = (Array.isArray(authorizations) || typeof authorizations === 'string') && authorizations.length > 0
-                        const { next, code } = isAuthorized(roles, authorizations)
-                        return <Route
-                            key={id}
-                            exact
-                            path={path}
-                            render={(props) => (authenticated || shouldCheckRoles || shouldCheckAuthorizations) ? (
-                                next ? <Component props={props} /> :
-                                    code === 401 ? <Redirect to={{ pathname: '/401', state: { title } }} /> :
-                                        code === 403 ? <Redirect to={{ pathname: '/403', state: { title } }} /> :
-                                            <Redirect to='/404' />
-                            ) :
-                                <Component props={props} />
-                            }
-                        />
-                    })}
-                </Switch>
-                {bottom}
-            </Suspense>
-        </PreWrapper>
-    </BrowserRouter>
+    return <PreWrapper>
+        <Suspense fallback={<div> Loading route </div>}>
+            {top}
+            <Switch>
+                {routes.map(({ id, title, path, component: Component, authenticated, roles, authorizations }) => {
+                    const shouldCheckRoles = (Array.isArray(roles) || typeof roles === 'string') && roles.length > 0
+                    const shouldCheckAuthorizations = (Array.isArray(authorizations) || typeof authorizations === 'string') && authorizations.length > 0
+                    const { next, code } = isAuthorized(roles, authorizations)
+                    return <Route
+                        key={id}
+                        exact
+                        path={path}
+                        render={(props) => (authenticated || shouldCheckRoles || shouldCheckAuthorizations) ? (
+                            next ? <Component props={props} /> :
+                                code === 401 ? <Redirect to={{ pathname: '/401', state: { title } }} /> :
+                                    code === 403 ? <Redirect to={{ pathname: '/403', state: { title } }} /> :
+                                        <Redirect to='/404' />
+                        ) :
+                            <Component props={props} />
+                        }
+                    />
+                })}
+            </Switch>
+            {bottom}
+        </Suspense>
+    </PreWrapper>
 
 }

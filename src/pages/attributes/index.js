@@ -1,9 +1,11 @@
 import Page from "../../lib/layout/page"
 
-export const AttributesList = ({ tabs }) => {
+const AttributesList = () => {
     return (
-        <Page tabs={tabs} title='Attributes list'>
+        <Page title='Attributes list'>
             Lorem ipsu
         </Page>
     )
 }
+
+export default AttributesList

@@ -12,9 +12,10 @@ $menuItemTextColor: inherit;
 $menuItemTextColor_hover: white;
 
 .sidebar {
+    // #292929
     background: $grey-dark-80;
-    // color: $dark2_contrast;
-    z-index: 1;
+    color: $grey-light-30;
+    z-index: 2;
     min-width: $sidebarWidth;
     max-width: $sidebarWidth;
     width: $sidebarWidth;

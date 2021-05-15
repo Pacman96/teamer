@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState, useContext } from 'react'
 
-import firebase from '../services/firebase'
+import { firebase } from '../services/auth'
 import { useAssets } from './assets';
 
 const ProductsContext = createContext();

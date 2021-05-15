@@ -1,16 +1,19 @@
 import { StrictMode, lazy } from 'react';
 import { render } from 'react-dom';
 import reportWebVitals from './reportWebVitals';
+import { BrowserRouter } from 'react-router-dom';
+import './drinkit-ui/scss/index.scss'
 
-import './lib/styles/root.scss';
-import './services/firebase'
-
-import { AuthProvider, Router } from './services/auth';
-import { rolesList, authorizationsList } from './utils/access-control';
+// Providers
+import { TeamProvider } from './api/team';
 import { AssetsProvider } from './api/assets';
 import { ProductsProvider } from './api/products';
+import { AuthProvider, Router } from './services/auth';
+import App from './App'
 
 
+// config
+import { rolesList, authorizationsList } from './utils/access-control';
 
 
 const PreWrapper1 = ({ children }) => {
@@ -22,9 +25,37 @@ const PreWrapper1 = ({ children }) => {
     </AssetsProvider>
   )
 }
+const PreWrapper2 = ({ children }) => {
+  return (
+    <TeamProvider>
+      {children}
+    </TeamProvider>
+  )
+}
+
 
 
 const routes = [
+  {
+    title: 'Add member',
+    id: 'add-member', path: '/team/add-member', component: lazy(() => import('./pages/team/add-member')),
+    authenticated: true, roles: 'manager', authorizations: ''
+  },
+  {
+    title: 'Team members',
+    id: 'members', path: '/team/members', component: lazy(() => import('./pages/team')),
+    authenticated: true, roles: 'manager', authorizations: ''
+  },
+  {
+    title: 'Collections list',
+    id: 'collections', path: '/collections', component: lazy(() => import('./pages/collections')),
+    authenticated: true, roles: 'manager', authorizations: ''
+  },
+  {
+    title: 'Attributes list',
+    id: 'attributes', path: '/attributes', component: lazy(() => import('./pages/attributes')),
+    authenticated: true, roles: 'manager', authorizations: ''
+  },
   {
     title: 'Registration page',
     id: 'register', path: '/register', component: lazy(() => import('./pages/auth/Register')),
@@ -60,17 +91,23 @@ const routes = [
 
 render(
   <StrictMode>
-    <PreWrapper1>
-      <AuthProvider config={{
-        extraUserCollection: 'profiles',
-        rolesList: rolesList,
-        authorizationsList: authorizationsList,
-        initialRole: '',
-        initialAuthorizations: [], // for all users (config in rolesList for each specific role)
-      }}>
-        <Router routes={routes} />
-      </AuthProvider>
-    </PreWrapper1>
+    <BrowserRouter>
+      <PreWrapper1>
+        <AuthProvider
+          config={{
+            extraUserCollection: 'profiles',
+            rolesList: rolesList,
+            authorizationsList: authorizationsList,
+            initialRole: '',
+            initialAuthorizations: [], // for all users (config in rolesList for each specific role)
+          }}>
+          <PreWrapper2>
+            <Router PreWrapper={({ children }) => <App children={children} />} routes={routes} />
+          </PreWrapper2>
+        </AuthProvider>
+      </PreWrapper1>
+    </BrowserRouter>
+
 
   </StrictMode>,
   document.getElementById('root')

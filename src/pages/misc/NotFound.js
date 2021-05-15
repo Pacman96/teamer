@@ -1,9 +1,9 @@
-
+import { Page } from '../../drinkit-ui/sections'
 const NotFound = () => {
     return (
-        <div>
+        <Page  centered back={false}>
             404 not found
-        </div>
+        </Page>
     )
 }
 

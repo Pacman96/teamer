@@ -44,7 +44,7 @@ export const LayoutProvider = ({
         getHeader()
         getSidebar()
         getFooter()
-    }, [sidebars, headers, footers])
+    }, [user])
 
     const value = {
         isSidebarOpen: sidebarOpen,

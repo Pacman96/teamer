@@ -1,5 +1,5 @@
 import { createContext, useEffect } from 'react'
-import firebase from '../services/firebase'
+import { firebase } from '../services/auth'
 
 const SourcingContext = createContext();
 

@@ -9,7 +9,8 @@ const Sidebar = ({
     visible,
     menu,
     top,
-    bot
+    bot,
+    theme 
 }) => {
     const { isSidebarOpen, closeSidebar } = useLayout()
     const his = useHistory()
@@ -18,27 +19,40 @@ const Sidebar = ({
         <Block className={classNames('sidebar', { open: isSidebarOpen })} theme='dark' style={{ borderRadius: 0 }}    >
             {top}
             <div className='sidebar-body '>
-                {menu.map(({ id, label, path, children, isActive, visible = true, hidden = false }) => visible && !hidden ?
+                {menu.map(({ id, label, path, children = [], isActive, visible = true, hidden = false }) => visible && !hidden ?
                     <div key={id} style={{ flex: 1 }}>
-                        <Button children={label} isActive={isActive}
-                            theme='light'
-                            fill='ghost'
-                            size='md'
-                            style={{ fontWeight: 500, width: '-webkit-fill-available', marginBottom: 5, marginTop: 0}}
-                            onClick={() => {
-                                path && his.push(path)
-                                closeSidebar()
-                            }}
-                        />
-                        {(children && children.length) > 0 &&
-                            children.map(child => child.visible && !child.hidden &&
-                                <Button
-                                    key={child.id} children={child.label} isActive={child.isActive}
+                        {
+                            children.length > 0 ?
+                                <div style={{ fontWeight: 500, width: '-webkit-fill-available', marginBottom: 10, marginTop: 20, textAlign: 'center', color: 'wheat' }}>{label}</div>
+                                : <Button children={label} isActive={isActive}
+                                    theme='light'
+                                    fill='ghost'
+                                    size='md'
+                                    style={{ fontWeight: 500, width: '-webkit-fill-available', marginBottom: 5, marginTop: 0 }}
                                     onClick={() => {
-                                        child.path && his.push(child.path)
+                                        path && his.push(path)
+                                        children.length < 1 && closeSidebar()
+                                    }}
+                                />
+                        }
+
+                        {children.length > 0 &&
+                            children.map(({ id, label, path, children = [], isActive, visible = true, hidden = false }) => {
+                                if (!visible || hidden) {
+                                    return <div > hidden </div>
+                                }
+                                else return <Button
+                                theme='light'
+                                    fill='ghost'
+                                    key={id} children={label} isActive={isActive}
+                                    style={{ fontWeight: 500, width: '-webkit-fill-available', marginBottom: 5, marginTop: 0 }}
+                                    onClick={() => {
+                                        path && his.push(path)
                                         closeSidebar()
                                     }}
                                 />
+                            }
+
 
                             )
                         }
