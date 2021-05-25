@@ -1,10 +1,11 @@
 import { useEffect, useState, createContext, useContext, Suspense } from "react";
-import {  Switch, Route, Redirect } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import fire from "firebase/app";
 
 import "firebase/auth";
 import "firebase/firestore";
 import "firebase/storage";
+import Page from "../drinkit-ui/sections";
 
 
 fire.initializeApp({
@@ -30,18 +31,18 @@ export function useAuth() {
     return useContext(AuthContext)
 }
 
-export const AuthProvider = ({ children,
+export const AuthProvider = ({
+    children,
     config = {
         extraUserCollection: '',  // no authorizations or roles if empty
         rolesList: [], // array of { value: '', label: '',initialAuthorizations : [''] }
         authorizationsList: [], // array of { value: '', label: '', description}
-        initialRole: '', // string
+        initialRole: 'manager', // string
         initialAuthorizations: [], // for all users (config in rolesList for each specific role)
     }
 }) => {
     const [user, setUser] = useState();
     const [loading, setLoading] = useState(true);
-
 
     const getExtraUserData = (user) => {
         if (!config.extraUserCollection) return null
@@ -71,13 +72,10 @@ export const AuthProvider = ({ children,
         return unsubscribe;
     }, []);
 
-
-
-    const signup = (email = '', password = '', displayName = '', role = 'manager', authorizations = [], extraUserData = {}) => {
+    const signup = (email = '', password = '', role = 'manager', authorizations = [], extraUserData = {}) => {
         let promise = new Promise(function (resolve, reject) {
             fireauth.createUserWithEmailAndPassword(email, password)
                 .then(({ user }) => {
-                    user.updateProfile({ displayName });
                     if (config.extraUserCollection) {
                         const db_role = role || config.initialRole || '';
                         const initialRoleAuthorizations = role ? config.rolesList.filter(i => i.value === db_role)[0].initialAuthorizations : []
@@ -86,7 +84,7 @@ export const AuthProvider = ({ children,
                             ...config.initialAuthorizations,
                             ...initialRoleAuthorizations
                         ]
-                        firestore.collection(config.extraUserCollection).doc(user.uid).set({
+                        firebase.firestore().collection(config.extraUserCollection).doc(user.uid).set({
                             role: db_role,
                             authorizations: db_authorizations,
                             ...extraUserData
@@ -171,8 +169,8 @@ export const Router = ({
     bottom,
 }) => {
     const { isAuthorized } = useAuth()
-    return <PreWrapper>
-        <Suspense fallback={<div> Loading route </div>}>
+    return <Suspense fallback={''}>
+        <PreWrapper>
             {top}
             <Switch>
                 {routes.map(({ id, title, path, component: Component, authenticated, roles, authorizations }) => {
@@ -181,7 +179,7 @@ export const Router = ({
                     const { next, code } = isAuthorized(roles, authorizations)
                     return <Route
                         key={id}
-                        exact
+                        exact={true}
                         path={path}
                         render={(props) => (authenticated || shouldCheckRoles || shouldCheckAuthorizations) ? (
                             next ? <Component props={props} /> :
@@ -195,7 +193,7 @@ export const Router = ({
                 })}
             </Switch>
             {bottom}
-        </Suspense>
-    </PreWrapper>
+        </PreWrapper>
+    </Suspense>
 
 }

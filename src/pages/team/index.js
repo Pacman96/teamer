@@ -4,7 +4,6 @@ import { AuthorizationItem } from "../../components/item/authorization"
 import Page from "../../lib/layout/page"
 import Carousel from "../../lib/carousel"
 import Block from "../../lib/block"
-import Button from "../../lib/button"
 import { useTeam } from "../../api/team"
 import { useAuth } from "../../services/auth"
 

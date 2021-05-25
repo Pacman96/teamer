@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import {  useState } from "react"
 import { useTeam } from "../../api/team"
 import { Block } from "../../drinkit-ui/base"
 import { Button } from "../../drinkit-ui/cta"
@@ -8,10 +8,10 @@ export const AuthorizationItem = ({
     target,
     authorization
 }) => {
-    const { user: me, isAuthorized } = useAuth()
-    const { appendAuthorization, revokeAuthorization, team } = useTeam()
+    const {  isAuthorized } = useAuth()
+    const { appendAuthorization, revokeAuthorization } = useTeam()
 
-    const { authorizations, role, userID } = target
+    const { authorizations, userID } = target
     const { label, description, value } = authorization
 
     const alreadyHave = authorizations.includes(value)
@@ -28,9 +28,7 @@ export const AuthorizationItem = ({
         revokeAuthorization(userID, value).then(() => setLoading(false))
     }
 
-    // useEffect(() => {
-    // }, [team, target,authorizations ])
-    // console.log("RE -- RENDERED")
+
 
     return <Block
         canLoading canLocked

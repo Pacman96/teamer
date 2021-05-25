@@ -1,55 +1,53 @@
 import classNames from "classnames"
 import { useHistory } from "react-router"
-import { Button } from "./cta"
+import {  IconButton } from "./clickers"
 
 
 export const Page = ({
-    children,
+    htmlTag,
     centered,
     container,
-    style = { root: { padding: 20 } },
+    
+
+    children,
+    back = false,
     title = '',
-    titleRight = '',
-    back = true,
     next,
+
+    rootProps,
+    titleProps,
+    backProps,
+    nextProps,
+    contentProps,
+
+    loading
 }) => {
     const his = useHistory()
+    const HtmlTag = htmlTag || 'div'
+    if (loading) return <div className='page centered'>
+        Loading
+    </div>
     return (
-        <div
-            className={classNames('page', { centered })}
-            style={style.root}
+        <HtmlTag
+            className={classNames('page mt-xxl', { centered })}
+            {...rootProps}
         >
-            {
-                (back || next)
-                &&
-                <div style={{ marginBottom: 30, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <div>
-                        {back && <Button
-                            children='< Back'
-                            theme='dark'
-                            fill='ghost'
-                            size='md'
-                            onClick={() => his.goBack()}
-                        />}
-                    </div>
-                    {next}
-                </div>
-            }
 
 
             {
-                (title || titleRight)
+                (title || next || back)
                 &&
-                <div className='head' style={{ marginBottom: 30 }}>
-                    <div className='title'>{title}</div>
-                    <div className='title-right'>{titleRight}</div>
+                <div className='head mb-xxl' >
+                    {(back || backProps) && <IconButton bg='light' className='mr-md' icon='angle-double-left' onClick={() => his.goBack()} />}
+                    {(title || titleProps) && <div className='title'>{title}</div>}
+                    {(next || nextProps) && <div {...nextProps}>{next}</div>}
                 </div>
             }
 
-            {container ? <div className='container'>{children} </div> : children}
+          <div className='container' {...contentProps}>{children} </div>
 
 
-        </div>
+        </HtmlTag>
     )
 }
 

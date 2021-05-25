@@ -1,21 +1,20 @@
-import { useDispatch } from "react-redux"
 import { useHistory } from "react-router"
-import _auth from "../../api/auth"
-import Button from "../../lib/button"
+import { Button } from "../../drinkit-ui/cta"
+import { useAuth } from "../../services/auth"
 
 
-export const RightHeader = ({ logged , username }) => {
+
+export const RightHeader = ({ logged, username }) => {
     const his = useHistory()
-    const dis = useDispatch()
-
+    const { signout } = useAuth()
 
     return (
         <div>
             {logged ?
-                <Button onClick={() => dis(_auth.set.logout())} label={`Logout : ${username}`} variation='primary' size='m' /> 
+                <Button onClick={signout} children={`Logout : ${username}`} theme='primary' size='m' />
                 :
                 <>
-                <Button onClick={() => his.push('/login')} label='Login' variation='primary' size='m' />
+                    <Button onClick={() => his.push('/login')} label='Login' variation='primary' size='m' />
 
                 </>
             }

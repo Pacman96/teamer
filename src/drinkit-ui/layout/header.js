@@ -1,11 +1,12 @@
 import { useLayout } from "."
 
 const Header = ({ hamburger, logo, right }) => {
-    const { toggleSidebar } = useLayout()
+    const { toggleSidebar, sidebarProps } = useLayout()
     return <div className='header'>
-        <div className='sidebar-toogler' onClick={toggleSidebar}>
+        {sidebarProps.visible && <div className='sidebar-toogler' onClick={toggleSidebar}>
             {hamburger}
-        </div>
+        </div>}
+        
         <div className='mid'>{logo}</div>
         <div> {right}</div>
     </div>

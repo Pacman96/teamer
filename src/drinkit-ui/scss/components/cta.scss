@@ -1,36 +1,127 @@
+button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: 0;
+    border-radius: 0;
+    background: unset;
+    color: inherit;
+    font: inherit;
+    cursor: inherit;
+    &:focus {
+        outline: none;
+    }
+}
+.btn {
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 40px;
+    width: max-content;
+    padding: 4px 10px;
+
+    box-shadow: 1px 1px #00000014;
+    border-radius: 5px;
+    .disabled {
+        color: #d2d5db;
+        background: #6c7589;
+        cursor: not-allowed;
+    }
+    &:focus-within {
+        outline: none;
+        box-shadow: 0 0 0 4px #cbd6ee;
+    }
+}
+
+.SwitchClicker {
+    min-width: 100px;
+    
+    border-left: 5px solid $primary;
+    
+    font-weight: 600;
+    font-size: 15px;
+
+    &.selected {
+        background: $primary;
+        color: white;
+    }
+}
+.Chip {
+    height: 40px;
+
+    border-radius: 50px;
+    box-shadow: 1px 1px #00000014;
+
+    > img {
+        margin-left: -4px;
+        object-fit: cover;
+        height: 100%;
+        border-radius: inherit;
+    }
+    > span:not(:last-child) {
+        margin-right: 10px;
+    }
+    > span:last-child {
+        margin-left: 10px;
+    }
+    &.selected {
+        background: $primary;
+        color: white;
+    }
+}
+.Button {
+    min-width: 100px;
+
+    font-weight: 600;
+}
+.IconButton {
+    min-width: 40px;
+    max-width: 40px;
+    font-weight: 600;
+}
+
 // Theme
 
 
-.button {
-    margin: 10px;
-    border: 2px solid transparent;
-    font-weight: 600;
-    position: relative;
-    display: flex;
-    align-items: center;
-    background-color: transparent;
-    color: inherit;
-
-    &:not(:disabled) {
-        cursor: pointer;
-        pointer-events: all;
-    }
-    &.h-xs > .content {
-        padding: 0 $space_xs;
-    }
-    &.h-sm > .content {
-        padding: 0 $space_sm;
-    }
-    &.h-md > .content {
-        padding: 0 $space_md;
-    }
-    &.h-lg > .content {
-        padding: 0 $space_lg;
-    }
-    &.h-xl > .content {
-        padding: 0 $space_xl;
-    }
-    &.h-xxl > .content {
-        padding: 0 $space_xxl;
-    }
-}
+// .button {
+//     border: 2px solid transparent;
+//     font-weight: 600;
+//     position: relative;
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//     background-color: transparent;
+//     &.block > .content {
+//         justify-content: center;
+//     }
+//     > .content {
+//         flex: 1;
+//         display: flex;
+//         align-items: center;
+//     }
+//     &:not(:disabled) {
+//         cursor: pointer;
+//         pointer-events: all;
+//     }
+//     &.h-xs > .content {
+//         padding: 0 $space_xs;
+//     }
+//     &.h-sm > .content {
+//         padding: 0 $space_sm;
+//     }
+//     &.h-md > .content {
+//         padding: 0 $space_md;
+//     }
+//     &.h-lg > .content {
+//         padding: 0 $space_lg;
+//     }
+//     &.h-xl > .content {
+//         padding: 0 $space_xl;
+//     }
+//     &.h-xxl > .content {
+//         padding: 0 $space_xxl;
+//     }
+// }

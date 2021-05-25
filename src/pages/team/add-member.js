@@ -16,12 +16,12 @@ const AddMemberPage = () => {
     const usernameRef = useRef();
     const roleRef = useRef();
 
-    const reset =  () =>{
-        emailRef.current.value = ''
-        passwordRef.current.value = ''
-        usernameRef.current.value = ''
-        roleRef.current.value = ''
-    }
+    // const reset =  () =>{
+    //     emailRef.current.value = ''
+    //     passwordRef.current.value = ''
+    //     usernameRef.current.value = ''
+    //     roleRef.current.value = ''
+    // }
 
     const submit = e => {
         e.preventDefault()

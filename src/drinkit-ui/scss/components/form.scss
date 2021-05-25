@@ -1,0 +1,168 @@
+// Normalizing
+input,
+textarea {
+    color: inherit;
+    background-color: inherit;
+    font: inherit;
+    outline: unset;
+    padding: 0;
+    border: unset;
+    width: 100%;
+}
+input::-webkit-file-upload-button{
+    visibility: hidden;
+    display: none;
+}
+@keyframes changeColorToPrimary {
+    to {
+        color: $primary;
+    }
+}
+.formrow {
+    display: flex;
+    padding: 10px 0;
+    .fas.fa-exclamation-circle {
+        color: $warning;
+    }
+    .errMsg {
+        color: $warning;
+    }
+}
+.formrow:hover {
+    label {
+        animation-name: changeColorToPrimary;
+        animation-duration: 0.75s;
+    }
+}
+.formrow:focus-within {
+    label {
+        color: $primary;
+    }
+}
+.field {
+    display: flex;
+
+
+    min-height: 40px;
+    width: max-content;
+    min-width: 100px;
+    padding: 4px 10px;
+
+    background: white;
+
+    border-left: 3px solid transparent;
+    border-radius: 4px;
+    box-shadow: 1px 1px #00000014;
+
+    font-size: 15px;
+
+    > * {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    >:not(input) {}
+    >:not(:last-child) {
+        margin-right: 10px;
+    }
+
+
+    &.err {
+        border-left-color: $warning;
+
+    }
+    &:focus-within {
+        // box-shadow: 1px 1px 8px #00000021;
+        border-left-color: $primary;
+    }
+
+
+}
+
+
+// .input, .textarea,.select {
+//     background: red!important;
+//     border: 1px solid red!important;
+//     position: relative;
+//     display: flex;
+//     align-items: center;
+//     > * {
+//         min-height: inherit;
+//         max-height: inherit;
+//     }
+//     input,select,textarea {
+//         flex: 1;
+//     }
+//     >:not(input) {
+//         font-weight: 600;
+//         display: flex;
+//         align-items: center;
+//         justify-content: center;
+//     }
+//     &.h-xs {
+//         > input {
+//             padding: 0 $space_sm;
+//         }
+//         >:first-child:not(:last-child) {
+//             padding-left:$space_sm;
+//         }
+//         >:last-child:not(:first-child) {
+//             padding-right: $space_sm;
+//         }
+//     }
+//     &.h-sm {
+//         > input {
+//             padding: 0 $space_sm;
+//         }
+//         >:first-child:not(:last-child) {
+//             padding-left:$space_sm;
+//         }
+//         >:last-child:not(:first-child) {
+//             padding-right: $space_sm;
+//         }
+//     }
+//     &.h-md {
+//         > input {
+//             padding: 0 $space_sm;
+//         }
+//         >:first-child:not(:last-child) {
+//             padding-left:$space_sm;
+//         }
+//         >:last-child:not(:first-child) {
+//             padding-right: $space_sm;
+//         }
+//     }
+//     &.h-lg {
+//         > input {
+//             padding: 0 $space_sm;
+//         }
+//         >:first-child:not(:last-child) {
+//             padding-left:$space_sm;
+//         }
+//         >:last-child:not(:first-child) {
+//             padding-right: $space_sm;
+//         }
+//     }
+//     &.h-xl {
+//         > input {
+//             padding: 0 $space_sm;
+//         }
+//         >:first-child:not(:last-child) {
+//             padding-left:$space_sm;
+//         }
+//         >:last-child:not(:first-child) {
+//             padding-right: $space_sm;
+//         }
+//     }
+//     &.h-xxl {
+//         > input {
+//             padding: 0 $space_sm;
+//         }
+//         >:first-child:not(:last-child) {
+//             padding-left:$space_sm;
+//         }
+//         >:last-child:not(:first-child) {
+//             padding-right: $space_sm;
+//         }
+//     }
+// }

@@ -1,60 +1,49 @@
 import classNames from "classnames"
+import { cs } from "../utils/styling"
+
+
+export const Group = props => {
+    const { children, align , className} = props
+    return (
+        <div className={cs(props, ['all'], `group ${className || ' '}`)}>
+            {children}
+        </div>
+    )
+}
+
 
 export const Block = ({
     // state
-    canLoading, canActive, canDisabled, canLocked,
+    canLoading, canActive, canDisabled, canLocked, canHover,
     isLoading, isActive, isDisabled, isLocked,
     // styling
-    pad = '', padLR = '', padTB = '', mar = '', marLR = '', marTB = '',
-    theme, fill,
-    elvation = '', curve = 'square',
-    // main
-    children, className, style,
-    htmlTag,
+    theme, fill, elvation = '', curve,
+    // position & display
+    align,
+    // main 
+    children, className, style, visible = true, hidden = false,
+    htmlTag, block,
     ...rest
 }) => {
+    if (!visible || hidden) return null
     const HtmlTag = htmlTag || 'div'
     const props = {
         className: classNames(
             className,
-            // paddings 
-            { 'pad-xs': pad === 'xs' },
-            { 'pad-sm': pad === 'sm' },
-            { 'pad-md': pad === 'md' },
-            { 'pad-lg': pad === 'lg' },
-            { 'pad-xl': pad === 'xl' },
-            { 'pad-xxl': pad === 'xxl' },
-            { 'padLR-xs': padLR === 'xs' },
-            { 'padLR-sm': padLR === 'sm' },
-            { 'padLR-md': padLR === 'md' },
-            { 'padLR-lg': padLR === 'lg' },
-            { 'padLR-xl': padLR === 'xl' },
-            { 'padLR-xxl': padLR === 'xxl' },
-            { 'padTB-xs': padTB === 'xs' },
-            { 'padTB-sm': padTB === 'sm' },
-            { 'padTB-md': padTB === 'md' },
-            { 'padTB-lg': padTB === 'lg' },
-            { 'padTB-xl': padTB === 'xl' },
-            { 'padTB-xxl': padTB === 'xxl' },
-            // margins 
-            { 'mar-xs': mar === 'xs' },
-            { 'mar-sm': mar === 'sm' },
-            { 'mar-md': mar === 'md' },
-            { 'mar-lg': mar === 'lg' },
-            { 'mar-xl': mar === 'xl' },
-            { 'mar-xxl': mar === 'xxl' },
-            { 'marLR-xs': marLR === 'xs' },
-            { 'marLR-sm': marLR === 'sm' },
-            { 'marLR-md': marLR === 'md' },
-            { 'marLR-lg': marLR === 'lg' },
-            { 'marLR-xl': marLR === 'xl' },
-            { 'marLR-xxl': marLR === 'xxl' },
-            { 'marTB-xs': marTB === 'xs' },
-            { 'marTB-sm': marTB === 'sm' },
-            { 'marTB-md': marTB === 'md' },
-            { 'marTB-lg': marTB === 'lg' },
-            { 'marTB-xl': marTB === 'xl' },
-            { 'marTB-xxl': marTB === 'xxl' },
+            // theme 
+            { 'primary': theme === 'primary' },
+            { 'secondary': theme === 'secondary' },
+            { 'danger': theme === 'danger' },
+            { 'warning': theme === 'warning' },
+            { 'success': theme === 'success' },
+            { 'infos': theme === 'infos' },
+            { 'dark': theme === 'dark' },
+            { 'light': theme === 'light' },
+            { 'grey': theme === 'grey' },
+            // fill
+            { 'filled': fill === 'filled' || fill === true },
+            { 'outlined': fill === 'outlined' },
+            { 'ghost': fill === 'ghost' },
             // Shadows
             { 'elvation-xs': elvation === 'xs' },
             { 'elvation-sm': elvation === 'sm' },
@@ -66,26 +55,22 @@ export const Block = ({
             { 'square': curve === 'square' },
             { 'curved': curve === 'curved' },
             { 'round': curve === 'round' },
+            { 'cercled': curve === 'cercled' },
             //  states
             { 'isLoading': isLoading && canLoading },
             { 'isActive': isActive && canActive },
             { 'isDisabled': isDisabled && canDisabled },
             { 'isLocked': isLocked && canLocked },
-            // theme 
-            { 'primary': theme === 'primary' },
-            { 'secondary': theme === 'secondary' },
-            { 'danger': theme === 'danger' },
-            { 'warning': theme === 'warning' },
-            { 'success': theme === 'success' },
-            { 'infos': theme === 'infos' },
-            { 'dark': theme === 'dark' },
-            { 'light': theme === 'light' },
-            // fill
-            { 'filled': fill === 'filled' || fill === true },
-            { 'outlined': fill === 'outlined' },
-            { 'ghost': fill === 'ghost' },
+            // reguls
+            { canHover: canHover },
+            { block: block }
         ),
-        style: { ...style }
+        style: {
+            display: align && 'flex',
+            justifyContent: align === 'sb' ? 'space-between' : align,
+            alignItems: 'center',
+            ...style
+        }
     }
     return <HtmlTag {...props} {...rest}>{children}</HtmlTag>
 

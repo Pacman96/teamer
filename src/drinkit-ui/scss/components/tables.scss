@@ -1,0 +1,60 @@
+table.primary {
+    > thead {
+        > tr {
+            background-color: $primary;
+            color: white;
+        }
+    }
+    > tbody {
+        > tr {
+            &:nth-child(odd) {
+                background-color: $grey-light-100;
+            }
+            &:nth-child(even) {
+                background-color: $grey-light-80;
+            }
+            &:hover {
+                background-color: $primary-light-90;
+            }
+        }
+    }
+}
+
+
+table,
+table th,
+table td {
+    border: unset;
+}
+
+table {
+    width: 100%;
+    > thead {
+        border-radius: inherit;
+        > tr {
+            cursor: pointer;
+            border-radius: inherit;
+            > th {
+                height: 35px;
+                padding: 10px;
+                &:last-child {
+                    border-top-right-radius: inherit;
+                }
+                &:first-child {
+                    border-top-left-radius: inherit;
+                }
+            }
+        }
+    }
+    > tbody {
+        > tr {
+            cursor: pointer;
+            > td {
+                height: 25px;
+                padding: 10px;
+            }
+        }
+    }
+    border-collapse: collapse;
+    border-spacing: 1px 1px;
+}

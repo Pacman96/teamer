@@ -69,7 +69,7 @@ $primary-dark-80: mix(black, $primary, 80%);
 $primary-dark-90: mix(black, $primary, 90%);
 $primary-dark-100: mix(black, $primary, 100%);
 
-$secondary: #f5deb3;
+$secondary: #0d71a1;
 $secondary-light-10: mix(white, $secondary, 10%);
 $secondary-light-20: mix(white, $secondary, 20%);
 $secondary-light-30: mix(white, $secondary, 30%);
@@ -91,7 +91,7 @@ $secondary-dark-80: mix(black, $secondary, 80%);
 $secondary-dark-90: mix(black, $secondary, 90%);
 $secondary-dark-100: mix(black, $secondary, 100%);
 
-$danger: #CC0000;  
+$danger: #CC0000;
 $danger-light-10: mix(white, $danger, 10%);
 $danger-light-20: mix(white, $danger, 20%);
 $danger-light-30: mix(white, $danger, 30%);
@@ -113,8 +113,8 @@ $danger-dark-80: mix(black, $danger, 80%);
 $danger-dark-90: mix(black, $danger, 90%);
 $danger-dark-100: mix(black, $danger, 100%);
 
-$warning: #FF8800; 
-// Light shades 
+$warning: #FF8800;
+// Light shades
 $warning-light-10: mix(white, $warning, 10%);
 $warning-light-20: mix(white, $warning, 20%);
 $warning-light-30: mix(white, $warning, 30%);
@@ -136,7 +136,7 @@ $warning-dark-80: mix(black, $warning, 80%);
 $warning-dark-90: mix(black, $warning, 90%);
 $warning-dark-100: mix(black, $warning, 100%);
 
-$success: #007E33; 
+$success: #007E33;
 $success-light-10: mix(white, $success, 10%);
 $success-light-20: mix(white, $success, 20%);
 $success-light-30: mix(white, $success, 30%);
@@ -158,7 +158,7 @@ $success-dark-80: mix(black, $success, 80%);
 $success-dark-90: mix(black, $success, 90%);
 $success-dark-100: mix(black, $success, 100%);
 
-$infos: #0099CC; 
+$infos: #0099CC;
 $infos-light-10: mix(white, $infos, 10%);
 $infos-light-20: mix(white, $infos, 20%);
 $infos-light-30: mix(white, $infos, 30%);
@@ -197,6 +197,13 @@ $height_xl: 62px;
 $height_xxl: 76px;
 
 $radius: 20px;
+$radius-round: 200px;
+$radius-curved: 6px;
+
+
+// Typo
+$font1: 'Cairo', sans-serif;
+
 
 $ghost: transparent;
 $light1: #ffffff;

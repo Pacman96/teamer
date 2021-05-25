@@ -5,18 +5,17 @@ import { BrowserRouter } from 'react-router-dom';
 import './drinkit-ui/scss/index.scss'
 
 // Providers
-import { TeamProvider } from './api/team';
+import { StaffProvider } from './api/staff';
 import { AssetsProvider } from './api/assets';
 import { ProductsProvider } from './api/products';
 import { AuthProvider, Router } from './services/auth';
 import App from './App'
 
-
 // config
 import { rolesList, authorizationsList } from './utils/access-control';
+import { CartProvider } from './api/cart';
 
-
-const PreWrapper1 = ({ children }) => {
+const BeforeAuthentication = ({ children }) => {
   return (
     <AssetsProvider>
       <ProductsProvider>
@@ -25,15 +24,16 @@ const PreWrapper1 = ({ children }) => {
     </AssetsProvider>
   )
 }
-const PreWrapper2 = ({ children }) => {
+
+const AfterAuthentication = ({ children }) => {
   return (
-    <TeamProvider>
-      {children}
-    </TeamProvider>
+    <CartProvider>
+      <StaffProvider>
+        {children}
+      </StaffProvider>
+    </CartProvider>
   )
 }
-
-
 
 const routes = [
   {
@@ -41,21 +41,82 @@ const routes = [
     id: 'add-member', path: '/team/add-member', component: lazy(() => import('./pages/team/add-member')),
     authenticated: true, roles: 'manager', authorizations: ''
   },
+
   {
-    title: 'Team members',
-    id: 'members', path: '/team/members', component: lazy(() => import('./pages/team')),
+    title: 'Add products',
+    id: 'products-add', path: '/shop/products/add', component: lazy(() => import('./pages/products/add')),
     authenticated: true, roles: 'manager', authorizations: ''
   },
+  {
+    title: 'products',
+    id: 'products', path: '/shop/products', component: lazy(() => import('./pages/products')),
+    authenticated: true, roles: 'manager', authorizations: ''
+  },
+  {
+    title: 'Products Item',
+    id: 'products-single', path: '/shop/products/:productID', component: lazy(() => import('./pages/products/single')),
+    authenticated: true, roles: 'manager', authorizations: ''
+  },
+  // Assets : collections
   {
     title: 'Collections list',
-    id: 'collections', path: '/collections', component: lazy(() => import('./pages/collections')),
+    id: 'collections', path: '/assets/collections', component: lazy(() => import('./pages/collections')),
     authenticated: true, roles: 'manager', authorizations: ''
   },
   {
-    title: 'Attributes list',
-    id: 'attributes', path: '/attributes', component: lazy(() => import('./pages/attributes')),
+    title: 'Collections add',
+    id: 'collections-add', path: '/assets/collections/add', component: lazy(() => import('./pages/collections/add')),
     authenticated: true, roles: 'manager', authorizations: ''
   },
+  {
+    title: 'Collection Item',
+    id: 'collections-single', path: '/assets/collections/:collectionID', component: lazy(() => import('./pages/collections/single')),
+    authenticated: true, roles: 'manager', authorizations: ''
+  },
+  // Assets : attributes
+  {
+    title: 'Attributes list',
+    id: 'attributes', path: '/assets/attributes', component: lazy(() => import('./pages/attributes')),
+    authenticated: true, roles: 'manager', authorizations: ''
+  },
+  {
+    title: 'Attributes add',
+    id: 'attributes-add', path: '/assets/attributes/add', component: lazy(() => import('./pages/attributes/add')),
+    authenticated: true, roles: 'manager', authorizations: ''
+  },
+  {
+    title: 'Attributes Item',
+    id: 'attributes-single', path: '/assets/attributes/:attributeID', component: lazy(() => import('./pages/attributes/single')),
+    authenticated: true, roles: 'manager', authorizations: ''
+  },
+  // Staff
+  {
+    title: 'Managers',
+    id: 'staff-managers', path: '/staff/managers', component: lazy(() => import('./pages/managers')),
+    authenticated: true, roles: '', authorizations: ''
+  },
+  {
+    title: 'Transporters',
+    id: 'staff-transporters', path: '/staff/transporters', component: lazy(() => import('./pages/transporters')),
+    authenticated: true, roles: '', authorizations: ''
+  },
+  {
+    title: 'Assistants',
+    id: 'staff-assistants', path: '/staff/assistants', component: lazy(() => import('./pages/assistants')),
+    authenticated: true, roles: '', authorizations: ''
+  },
+  {
+    title: 'Suppliers',
+    id: 'staff-suppliers', path: '/staff/suppliers', component: lazy(() => import('./pages/suppliers')),
+    authenticated: true, roles: '', authorizations: ''
+  },
+  // 
+  {
+    title: 'Dashboard',
+    id: 'dashboard', path: '/dashboard', component: lazy(() => import('./pages/dashboards/dashboard')),
+    authenticated: false, roles: '', authorizations: ''
+  },
+  // main
   {
     title: 'Registration page',
     id: 'register', path: '/register', component: lazy(() => import('./pages/auth/Register')),
@@ -92,7 +153,7 @@ const routes = [
 render(
   <StrictMode>
     <BrowserRouter>
-      <PreWrapper1>
+      <BeforeAuthentication>
         <AuthProvider
           config={{
             extraUserCollection: 'profiles',
@@ -101,11 +162,11 @@ render(
             initialRole: '',
             initialAuthorizations: [], // for all users (config in rolesList for each specific role)
           }}>
-          <PreWrapper2>
+          <AfterAuthentication>
             <Router PreWrapper={({ children }) => <App children={children} />} routes={routes} />
-          </PreWrapper2>
+          </AfterAuthentication>
         </AuthProvider>
-      </PreWrapper1>
+      </BeforeAuthentication>
     </BrowserRouter>
 
 

@@ -44,13 +44,15 @@ export const LayoutProvider = ({
         getHeader()
         getSidebar()
         getFooter()
-    }, [user])
+    }, [user, sidebars])
+    // removed user from dependencies
 
     const value = {
         isSidebarOpen: sidebarOpen,
         openSidebar: () => setSidebarOpen(true),
         closeSidebar: () => setSidebarOpen(false),
-        toggleSidebar: () => setSidebarOpen(!sidebarOpen)
+        toggleSidebar: () => setSidebarOpen(!sidebarOpen),
+        sidebarProps,
     };
 
     return (

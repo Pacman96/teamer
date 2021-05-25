@@ -19,7 +19,8 @@ export const TeamProvider = ({ children }) => {
     const [team, setTeam] = useState()
 
     useEffect(() => {
-        if (isAuthorized('', 'MANAGE_TEAM').next === true) {
+        const must = isAuthorized('', 'MANAGE_TEAM').next === true
+        if (must) {
             const unsubscribe = firebase.firestore().collection('profiles').where('role', '!=', 'Customer').onSnapshot(snapshot => {
                 let data = []
                 snapshot.forEach(doc => data.push({ userID: doc.id, ...doc.data() }))
@@ -31,7 +32,7 @@ export const TeamProvider = ({ children }) => {
             setTeam()
             setLoading(false)
         }
-    }, [user])
+    }, [user,isAuthorized])
 
     const appendAuthorization = (userID, authorization) => {
         let promise = new Promise(function (resolve, reject) {

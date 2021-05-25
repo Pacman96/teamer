@@ -1,0 +1,14 @@
+.menuC-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 45px;
+    cursor: pointer;
+    padding: 0 15px;
+    &::before {
+        display: none;
+    }
+    &.isActive {
+        color: $primary-light-50!important;
+    }
+}

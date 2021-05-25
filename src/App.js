@@ -1,6 +1,6 @@
 import { useHistory, useLocation } from 'react-router'
-import { Block } from './drinkit-ui/base'
-import { Button } from './drinkit-ui/cta'
+import { Block, Group } from './drinkit-ui/base'
+import { Button, IconButton } from './drinkit-ui/clickers'
 import { LayoutProvider } from './drinkit-ui/layout'
 import { useAuth } from './services/auth'
 
@@ -9,20 +9,26 @@ const HeaderRight = ({ logged }) => {
     const his = useHistory()
     const { signout } = useAuth()
     if (!logged) {
-        return <div style={{ display: 'flex' }}>
-            <Button theme='primary' size='sm' fill='outlined' marLR='xs' style={{ margin: 0 }} onClick={() => his.push('/register')} >
-                Register
-            </Button>
-            <Button theme='primary' size='sm' fill style={{ margin: 0, marginLeft: 5 }} onClick={() => his.push('/login')}>
-                Login
-            </Button>
-        </div>
+        return <Group>
+            {/* <Button
+                    bg='secondary'
+                    onClick={() => his.push('/register')}
+                    text='Register'
+                /> */}
+            <Button
+                bg='primary'
+                onClick={() => his.push('/login')}
+                text='Login'
+            />
+            <IconButton
+                icon='shopping-cart'
+                className='mr-xs'
+                bg='light'
+                onClick={() => his.push('/cart')}
+            />
+        </Group>
     }
-    return (
-        <Button theme='danger' size='sm' onClick={() => signout()}>
-            Logout
-        </Button>
-    )
+    return <Button bg='danger' onClick={signout} text='Logout' />
 }
 
 const Logo = () => {
@@ -49,7 +55,7 @@ export const SidebarTop = () => {
 
 
 const App = ({ children }) => {
-    const { user } = useAuth
+    // const { user } = useAuth()
     const { pathname } = useLocation()
 
 
@@ -64,26 +70,63 @@ const App = ({ children }) => {
             visible: true,
             theme: 'primary',
             menu: [
-                { id: 'shop', label: 'Shop', path: '/', isActive: pathname === '/' },
-                { id: 'dashboard', label: 'Dashboard', path: '/dashboard', isActive: pathname === '/dashboard' },
+                { label: 'Dashboard', icon: 'fa-tachometer-alt', path: '/dashboard', isActive: pathname === '/dashboard' },
                 {
-                    id: 'assets', label: 'Assets', children: [
-                        { id: 'attributes', label: 'Attributes', path: '/attributes', isActive: pathname === '/attributes' },
-                        { id: 'collections', label: 'Collections', path: '/collections', isActive: pathname === '/collections' },
+                    id: 'assets', label: 'Assets', icon: 'fa-database',
+                    children: [
+                        { id: 'assets-attributes', label: 'Attributes', path: '/assets/attributes', isActive: pathname === '/assets/attributes' },
+                        { id: 'assets-collections', label: 'Collections', path: '/assets/collections', isActive: pathname === '/assets/collections' },
+                        { id: 'assets-preferences', label: 'Preferences', path: '/assets/preferences', isActive: pathname === '/assets/preferences' },
                     ]
                 },
                 {
-                    id: 'team', label: 'Team', children: [
-                        { id: 'members', label: 'Memberes', path: '/team/members', isActive: pathname === '/team/members' },
-                        { id: 'tasks', label: 'Tasks', path: '/team/tasks', isActive: pathname === '/team/tasks' },
+                    id: 'staff', label: 'Staff', icon: 'fa-user-friends',
+                    children: [
+                        { id: 'staff-managers', label: 'Managers', path: '/staff/managers', isActive: pathname === '/staff/attributes' },
+                        { id: 'staff-suppliers', label: 'Suppliers', path: '/staff/suppliers', isActive: pathname === '/staff/suppliers' },
+                        { id: 'staff-transporters', label: 'Transporters', path: '/staff/transporters', isActive: pathname === '/staff/transporters' },
+                        { id: 'staff-assistants', label: 'Assistants', path: '/staff/assistants', isActive: pathname === '/staff/assistants' },
                     ]
                 },
                 {
-                    id: 'sourcing', label: 'Sourcing', children: [
+                    id: 'shop', label: 'Shop', icon: 'fa-store',
+                    children: [
+                        { id: 'shop-products', label: 'Products', path: '/shop/products', isActive: pathname === '/shop/products' },
+                        { id: 'shop-orders', label: 'Orders', path: '/shop/orders', isActive: pathname === '/shop/orders' },
+                        { id: 'shop-customers', label: 'Customers', path: '/shop/customers', isActive: pathname === '/shop/customers' },
+                        { id: 'shop-settings', label: 'Settings', path: '/shop/settings', isActive: pathname === '/shop/settings' },
+                        // in hsop settings 
+                        //    { id: 'res-delivery', label: 'Delivery', path: '/res/delivery', isActive: pathname === '/res/delivery' },
+                        //    { id: 'res-chanels', label: 'Chanels', path: '/res/chanels', isActive: pathname === '/res/chanels' },
+                        //    { id: 'res-assets', label: 'Assets', path: '/res/assets', isActive: pathname === '/res/assets' },
+
+                    ]
+                },
+                // {
+                //     label: 'Humain ressources', icon: 'fa-users', hidden: true,
+                //     children: [
+                //         { label: 'Tasks', path: '/actions/tasks', isActive: pathname === '/actions/tasks' },
+                //         { label: 'Landings', path: '/actions/landings', isActive: pathname === '/actions/landings' },
+                //         { label: 'Invoices', path: '/actions/invoices', isActive: pathname === '/actions/invoices' },
+                //     ]
+                // },
+
+                {
+                    id: 'actions', label: 'Actions', hidden: true,
+                    children: [
+                        { id: 'actions-tasks', label: 'Tasks', path: '/actions/tasks', isActive: pathname === '/actions/tasks' },
+                        { id: 'actions-landings', label: 'Landings', path: '/actions/landings', isActive: pathname === '/actions/landings' },
+                        { id: 'actions-invoices', label: 'Invoices', path: '/actions/invoices', isActive: pathname === '/actions/invoices' },
+                    ]
+                },
+                {
+                    id: 'sourcing', label: 'Sourcing', hidden: true, children: [
                         { id: 'suppliers', label: 'Suppliers', path: '/sourcing/suppliers', isActive: pathname === '/sourcing/suppliers' },
                         { id: 'supplies', label: 'Supplies', path: '/sourcing/supplies', isActive: pathname === '/sourcing/supplies' },
                     ]
                 },
+
+
             ],
             top: <SidebarTop />,
             bot: null,
@@ -91,12 +134,26 @@ const App = ({ children }) => {
         transporter: {
             visible: true,
             menu: [
-                { id: 'shop', label: 'Shop', path: '/', isActive: pathname === '/' },
                 { id: 'dashboard', label: 'Dashboard', path: '/dashboard', isActive: pathname === '/dashboard' },
                 {
-                    id: 'sourcing', label: 'Sourcing', children: [
-                        { id: 'suppliers', label: 'Suppliers', path: '/sourcing/suppliers', isActive: pathname === '/sourcing/suppliers' },
-                        { id: 'supplies', label: 'Supplies', path: '/sourcing/supplies', isActive: pathname === '/sourcing/supplies' },
+                    id: 'profile', label: 'Profile',
+                    children: [
+                        { id: 'informations', label: 'Infos', path: '/infos', isActive: pathname === '/infos' },
+                        { id: 'tarifs', label: 'Tarifs', path: '/tarifs', isActive: pathname === '/tarifs' },
+                    ]
+                },
+                {
+                    id: 'deliveries', label: 'Deliveries',
+                    children: [
+                        { id: 'deliveries-orders', label: 'Orders', path: '/deliveries/orders', isActive: pathname === '/deliveries/orders' },
+                        { id: 'deliveries-supplies', label: 'Supplies', path: '/deliveries/supplies', isActive: pathname === '/deliveries/supplies' },
+                    ]
+                },
+                {
+                    id: 'userdata', label: 'User data',
+                    children: [
+                        { id: 'userdata-invoices', label: 'Invoices', path: '/userdata/invoices', isActive: pathname === '/userdata/invoices' },
+                        { id: 'userdata-quality', label: 'Quality', path: '/userdata/quality', isActive: pathname === '/userdata/quality' },
                     ]
                 },
             ],
@@ -126,7 +183,7 @@ const App = ({ children }) => {
         },
         manager: {
             visible: true,
-            fixed: false,
+            fixed: true,
             hamburger: <> H </>,
             logo: <Logo />,
             right: <HeaderRight logged />

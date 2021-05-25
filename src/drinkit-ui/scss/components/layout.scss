@@ -13,6 +13,7 @@ $menuItemTextColor_hover: white;
 
 .sidebar {
     // #292929
+    flex-direction: column;
     background: $grey-dark-80;
     color: $grey-light-30;
     z-index: 2;
@@ -82,7 +83,7 @@ $menuItemTextColor_hover: white;
 
 // styling
 .layout {
-    background: $grey-light-90;
+    background: $grey-light-70;
     &.fixedHeader {
         > .sidebar {
             top: $headerHeight;
@@ -284,19 +285,20 @@ $menuItemTextColor_hover: white;
 }
 
 .page > .head {
+    padding: 20px 10px 0;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
     flex-shrink: 1;
-    margin-bottom: 30px;
+    > .fas {
+        font-size: 12px;
+    }
     > .title {
+        flex: 1;
         font-size: 30px;
         @include respond-to('small') {
-            display: flex;
             flex: 1;
-            justify-content: center;
-            align-items: center;
         }
     }
 }

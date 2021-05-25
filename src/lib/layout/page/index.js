@@ -17,9 +17,13 @@ const Page = ({
     titleRight = '',
     back,
     next,
+    loading
 }) => {
     const his = useHistory()
 
+    if (loading) return <div className='page centered'>
+        Loading
+    </div>
 
     return (
         <div
