@@ -3,17 +3,21 @@ import { IconButton } from "../../drinkit-ui/clickers"
 import { Page } from "../../drinkit-ui/sections"
 import { Table } from "../../drinkit-ui/table"
 import { Avatar } from "../../drinkit-ui/imgs"
+import { useEffect } from "react"
 import { useProducts } from "../../api/products"
 
 const List = () => {
-    const { list } = useProducts()
+    const { list, loading } = useProducts()
     const his = useHistory()
     const props = {
         page: {
+            loading: loading,
             title: 'Products',
             next: <IconButton icon='plus' onClick={() => his.push('/shop/products/add')} />
         }
     }
+    useEffect(() => {
+    }, [list])
     return (
         <Page {...props.page} >
             <Table

@@ -15,7 +15,7 @@ const Sidebar = ({
     const { isSidebarOpen, closeSidebar } = useLayout()
     if (!visible) return null
     return (
-        <Block className={classNames('sidebar', { open: isSidebarOpen })}
+        <Block className={classNames('sidebar bg-dark', { open: isSidebarOpen })}
         canHover={false}
             fill={fill}
             theme={theme}

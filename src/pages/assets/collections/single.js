@@ -1,21 +1,21 @@
 import { useEffect, useState } from "react"
 import { useHistory, useParams } from "react-router"
-import { useAssets } from "../../api/assets"
-import { Button } from "../../drinkit-ui/cta"
-import { Page } from "../../drinkit-ui/sections"
+import { useAssets } from "../../../api/assets"
+import { Button } from "../../../drinkit-ui/cta"
+import { Page } from "../../../drinkit-ui/sections"
 
-const AttributeSingle = () => {
+const CollectionSingle = () => {
     const his = useHistory()
-    const { attributes } = useAssets()
-    const { attributeID } = useParams()
+    const { collections } = useAssets()
+    const {collectionID } = useParams()
     const [ready, setReady] = useState(false)
-    const [attribute, setAttribute] = useState()
+    const [collection, setCollection] = useState()
     const [editMode, setEditMode] = useState(false)
 
     useEffect(() => {
         setReady(false)
-        attributes.get(attributeID).then(res => {
-            setAttribute(res)
+        collections.get(collectionID).then(res => {
+            setCollection(res)
             setReady(true)
         })
     }, [])
@@ -24,15 +24,15 @@ const AttributeSingle = () => {
     const save = () => {
         setEditMode(false)
     }
-    const remove = () => attributes.remove(attributeID).then(() => his.goBack())
+    const remove = () => collections.remove(collectionID).then(() => his.goBack())
     return (
         <Page
             loading={!ready}
-            title={attribute ? attribute.label : 'Error getting attribute'}
-            back={ready && attribute}
+            title={collection ? collection.label : 'Error getting collection'}
+            back={ready && collection}
             nextProps={{ style: { display: 'flex' } }}
             next={
-                ready && attribute &&
+                ready && collection &&
                 <>
                     <Button fill theme='danger'
                         children='Remove'
@@ -59,4 +59,4 @@ const AttributeSingle = () => {
 }
 
 
-export default AttributeSingle
+export default CollectionSingle

@@ -1,3 +1,11 @@
+$size_s: 30px;
+$size_m: 40px;
+$size_l: 50px;
+
+$fs_s: 13px;
+$fs_m: 15px;
+$fs_l: 17px;
+
 button {
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -12,6 +20,43 @@ button {
         outline: none;
     }
 }
+
+.btn.s {
+    min-height: $size_s;
+    font-size: $fs_s;
+    &.IconButton {
+        min-width: $size_s;
+        max-width: $size_s;
+        max-height: $size_s;
+    }
+    &.Chip {
+        height: $size_s;
+    }
+}
+.btn.m {
+    min-height: $size_m;
+    font-size: $fs_m;
+    &.IconButton {
+        min-width: $size_m;
+        max-width: $size_m;
+        max-height: $size_m;
+    }
+    &.Chip {
+        height: $size_m;
+    }
+}
+.btn.l {
+    min-height: $size_l;
+    font-size: $fs_l;
+    &.IconButton {
+        min-width: $size_l;
+        max-width: $size_l;
+        max-height: $size_l;
+    }
+    &.Chip {
+        height: $size_l;
+    }
+}
 .btn {
     cursor: pointer;
 
@@ -19,12 +64,21 @@ button {
     align-items: center;
     justify-content: center;
 
-    min-height: 40px;
     width: max-content;
     padding: 4px 10px;
 
-    box-shadow: 1px 1px #00000014;
     border-radius: 5px;
+    // box-shadow: 1px 1px #00000014;
+
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+
+
     .disabled {
         color: #d2d5db;
         background: #6c7589;
@@ -38,35 +92,30 @@ button {
 
 .SwitchClicker {
     min-width: 100px;
-    
-    border-left: 5px solid $primary;
-    
-    font-weight: 600;
-    font-size: 15px;
 
+    border-left: 5px solid $primary;
+    font-weight: 600;
     &.selected {
         background: $primary;
         color: white;
     }
 }
 .Chip {
-    height: 40px;
-
     border-radius: 50px;
-    box-shadow: 1px 1px #00000014;
-
-    > img {
-        margin-left: -4px;
-        object-fit: cover;
-        height: 100%;
-        border-radius: inherit;
-    }
+    // box-shadow: 1px 1px 1px 0px #0000001f;
     > span:not(:last-child) {
         margin-right: 10px;
     }
     > span:last-child {
         margin-left: 10px;
     }
+    > img {
+        margin-left: -4px;
+        object-fit: cover;
+        height: 100%;
+        border-radius: inherit;
+    }
+
     &.selected {
         background: $primary;
         color: white;
@@ -74,12 +123,15 @@ button {
 }
 .Button {
     min-width: 100px;
-
     font-weight: 600;
+    > span:not(:last-child) {
+        margin-right: 10px;
+    }
+    > span:last-child {
+        margin-left: 10px;
+    }
 }
 .IconButton {
-    min-width: 40px;
-    max-width: 40px;
     font-weight: 600;
 }
 

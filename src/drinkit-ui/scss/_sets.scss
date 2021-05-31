@@ -1,3 +1,28 @@
+.c-pri {
+    color: $primary;
+}
+.c-sec {
+    color: $secondary;
+}
+.c-dang {
+    color: $danger;
+}
+.c-warn {
+    color: $warning;
+}
+.c-succ {
+    color: $success;
+}
+.c-infos {
+    color: $infos;
+}
+.c-light {
+    color: $grey-light-100;
+}
+.c-dark {
+    color: $grey-dark-100;
+}
+
 .bg-pri {
     background-color: $primary;
     color: white;
@@ -27,9 +52,15 @@
     color: $grey-dark-100;
 }
 .bg-dark {
-    background-color: $grey-dark-100;
+    background-color: #020b19;
     color: $grey-light-100;
 }
+// Positions
+.vertical {
+    flex-direction: column;
+}
+
+
 // Themes
 .primary {
     &.filled {
@@ -451,7 +482,7 @@
 }
 // Misc
 .block {
-    width: 100%!important;
+    width: 100% !important;
 }
 
 // States

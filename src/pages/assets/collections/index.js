@@ -1,8 +1,8 @@
 import { useHistory } from "react-router"
-import { IconButton } from "../../drinkit-ui/clickers"
-import { Page } from "../../drinkit-ui/sections"
-import { useAssets } from "../../api/assets"
-import { Table } from "../../drinkit-ui/table"
+import { IconButton } from "../../../drinkit-ui/clickers"
+import { Page } from "../../../drinkit-ui/sections"
+import { useAssets } from "../../../api/assets"
+import { Table } from "../../../drinkit-ui/table"
 
 const CollectionsList = () => {
     const { collections } = useAssets()
@@ -18,11 +18,11 @@ const CollectionsList = () => {
             <Table
                 centered
                 records={collections.list}
-                onRecordClick={record => his.push('/assets/collections/' + record.collectionID)}
+                onRecordClick={record => his.push('/assets/collections/' + record.id)}
                 columns={[
                     {
                         label: 'ID',
-                        accessor: 'collectionID',
+                        accessor: 'id',
                         render: 'accessor',
                     },
                     {

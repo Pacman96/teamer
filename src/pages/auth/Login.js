@@ -7,21 +7,14 @@ import { useAuth } from '../../services/auth'
 
 const LoginPage = () => {
     const { signin, user } = useAuth()
-
-
-
     const [loading, setLoading] = useState(false)
-
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-
-
-
 
     const submit = e => {
         e.preventDefault()
         setLoading(true)
-        signin(email, password).then(user => setLoading(false))
+        signin(email, password).then(() => setLoading(false))
     }
 
     if (user) return <Redirect to={{
@@ -37,10 +30,10 @@ const LoginPage = () => {
 
             <form onSubmit={submit}>
                 <FormRow label='Email'  {...globalProps}>
-                    <FormField value={email} onChange={value => setEmail(value)} {...globalProps} type='email'/>
+                    <FormField hook={[email, setEmail]} {...globalProps} type='email'/>
                 </FormRow>
                 <FormRow label='Password'  {...globalProps}>
-                    <FormField value={password} onChange={value => setPassword(value)} {...globalProps} type='password'/>
+                    <FormField  hook={[password, setPassword]} {...globalProps} type='password'/>
                 </FormRow>
                 <button type='submit' disabled={loading}> log account </button>
             </form>

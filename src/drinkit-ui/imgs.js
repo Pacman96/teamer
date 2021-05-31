@@ -9,69 +9,20 @@ export const Picture = (props) => {
         crop = 'cover',
         height,
         width,
-        // ratio,
         src,
         list,
-        fav = 0,
         alt,
         className
     } = props
 
-    const [isLoading, setIsLoading] = useState(true)
-    const [isError, setIsError] = useState(false)
-    const [source, setSource] = useState('')
-
-    const reload = (props) => {
-        setSource(null)
-        setIsError(false)
-        setIsLoading(true)
-
-        const image = new Image()
-
-        image.src = props.list[fav] || props.src
-
-        image.onload = (e) => {
-            setIsLoading(false)
-            setIsError(false)
-            setSource(props.list[fav] || props.src || blank)
-            console.log(e)
-        }
-
-        image.onerror = (e) => {
-            setIsLoading(false)
-            setIsError(true)
-            setSource( blank)
-
-            console.log(e)
-        }
-    }
-
-
-    useEffect(() => {
-        reload(props)
-    }, [props])
 
     return (
-        <Block style={{ overflow: 'hidden', height, width }} className={className} >
-
+        <Block style={{ overflow: 'hidden', height, width }} className={className} {...props} >
             <Block htmlTag='img'
-                style={{ width: '100%', height: '100%', objectFill: crop }}
-                src={source}
-                alt={alt || source} />
-
-
-        </Block>
-    )
-}
-
-export const Gallery = ({
-    mini,
-}) => {
-    return (
-        <Block>
-            <Block >
-
-            </Block>
+                style={{ width: '100%', height: '100%', objectFit: crop }}
+                src={src || blank}
+                alt={alt || src}
+            />
         </Block>
     )
 }
@@ -92,9 +43,46 @@ export const Avatar = ({ className, size = 'md', src, alt, ...rest }) => {
                     className
                 )
             }
+            size='md'
+            src={src || 'https://www.rennes-sb.com/wp-content/uploads/2017/03/avatar_empty.png'}
+            alt={alt || src}
 
-
-            size='md' src={src || 'https://www.rennes-sb.com/wp-content/uploads/2017/03/avatar_empty.png'} alt={alt || src} {...rest} htmlTag='img' />
+            htmlTag='img'
+            {...rest} />
     )
 }
 
+
+
+export const Gallery = ({
+    images = [],
+    style,
+    width,
+    height,
+    className,
+    thumbs = true
+}) => {
+    const [index, setIndex] = useState(0  || 1 || 2)
+    useEffect(() => {
+    }, [images])
+    const onThumbHover = key => setIndex(key)
+    return (
+        <div style={{ ...style }} className={className}>
+                        <Picture
+                width='100%'
+                src={images[index]}
+                width={width}
+                height={height}
+            />
+         {thumbs && <div style={{ display: 'flex', justifyContent: 'center' }} className='mb-xs' >
+                {images.length > 0 && images.map((thumb, key) =>
+                    <Avatar key={key} src={thumb} className='mr-md'
+                        onMouseEnter={() => onThumbHover(key)}
+                        onPointerEnter={() => onThumbHover(key)}
+                    />
+                )}
+            </div>}   
+
+        </div>
+    )
+}

@@ -1,8 +1,8 @@
 import { useHistory } from "react-router"
-import { Chip, IconButton } from "../../drinkit-ui/clickers"
-import { Page } from "../../drinkit-ui/sections"
-import { useAssets } from "../../api/assets"
-import { Table } from "../../drinkit-ui/table"
+import { Chip, IconButton } from "../../../drinkit-ui/clickers"
+import { Page } from "../../../drinkit-ui/sections"
+import { useAssets } from "../../../api/assets"
+import { Table } from "../../../drinkit-ui/table"
 
 const AttributesList = () => {
     const { attributes } = useAssets()
@@ -18,11 +18,11 @@ const AttributesList = () => {
             <Table
                 centered
                 records={attributes.list}
-                onRecordClick={record => his.push('/assets/attributes/' + record.attributeID)}
+                onRecordClick={record => his.push('/assets/attributes/' + record.id)}
                 columns={[
                     {
                         label: 'ID',
-                        accessor: 'attributeID',
+                        accessor: 'id',
                         render: 'accessor',
                     },
                     {
@@ -32,8 +32,8 @@ const AttributesList = () => {
                     },
                     {
                         label: 'Variations',
-                        accessor: 'variations',
-                        render: (record) => record.variations.map((variation, index) => <Chip key={index} text={variation.label} block/>),
+                        accessor: 'children',
+                        render: (record) => record.children.map((variation, index) => <Chip key={index} text={variation.label} block/>),
                     },
                 ]}
             />

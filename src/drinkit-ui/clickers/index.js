@@ -1,10 +1,10 @@
-import { Children } from "react"
+
 import { cs } from "../../utils/styling"
 
 export const SwitchClicker = props => {
 
     const {
-        onText, offText, text, hook, ...rest
+        onText, offText, text,  hook = [null, () => null], ...rest
     } = props
 
 
@@ -26,7 +26,7 @@ const Avatar = ({ src = 'https://th.bing.com/th/id/R425d092e064c91c68135361386f9
 export const Chip = props => {
     const {
         text, avatar, iconLeft, iconRight, hook = [null, () => null],
-        className, bg,
+        className, bg, size,
         ...rest
     } = props
 
@@ -34,7 +34,13 @@ export const Chip = props => {
     const toggle = hook[1]
 
     return (
-        <div className={cs({ ...props, selected: value, bg: bg || 'light' }, ['all'], `btn Chip ${className}`)} onClick={toggle} {...rest}>
+        <div className={cs({
+            ...props,
+            selected: value,
+            bg: bg || 'light',
+            size: size || 's'
+
+        }, ['all'], `btn Chip ${className}`)} onClick={toggle} {...rest}>
             {avatar && <Avatar />}
             {iconLeft && <Icon fa={iconLeft} />}
             {text && <button>{text}</button>}
@@ -48,15 +54,19 @@ export const Button = (props) => {
     const {
         children, text, iconLeft, iconRight, icon,
         before, after, beforeProps, afterProps,
-        className, bg,
+        className, bg, size,
         ...rest
     } = props
 
 
     return (
         <div className={cs(
-            { ...props, bg: bg || 'primary' }
-            , ['all'],
+            { 
+                ...props, 
+                bg: bg || 'primary',
+                size: size || 'm'
+            }
+            , 'all',
             `btn Button ${className}`)
         }
             {...rest}
@@ -70,16 +80,19 @@ export const Button = (props) => {
 
 export const IconButton = (props) => {
     const {
-        icon, className, bg,
+        icon, className, bg, size,
         ...rest
     } = props
 
 
     return (
         <div className={cs(
-            { ...props, bg: bg || 'primary' }
-            , ['all'],
-            `btn IconButton ${className}`)
+            {
+                ...props,
+                size: size || 'm'
+            }
+            , 'all',
+            `btn IconButton ${className || ''}`)
         }
             {...rest}
         >

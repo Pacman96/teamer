@@ -1,10 +1,9 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useAssets } from "../../api/assets"
 import { useProducts } from "../../api/products"
-import { Chip } from "../../drinkit-ui/clickers"
+import { Chip, IconButton } from "../../drinkit-ui/clickers"
 import { Button } from "../../drinkit-ui/clickers"
-import { FormField, FormRow, Input, InputNumber, TextArea } from "../../drinkit-ui/form"
-import { Avatar } from "../../drinkit-ui/imgs"
+import { FormField, FormRow, Uploader } from "../../drinkit-ui/form"
 import { Page } from "../../drinkit-ui/sections"
 
 const pickChild = (parentID, childID, state, setState) => {
@@ -33,18 +32,13 @@ const ProductAdd = () => {
 
     const [label, setLabel] = useState('')
     const [description, setDescription] = useState('')
-
     const [price, setPrice] = useState(0)
     const [quantity, setQuantity] = useState(1)
-
     const [atts, setAtts] = useState({})
     const [colls, setColls] = useState({})
+    const [filesList, setFilesList] = useState([])
 
     const [loading, setLoading] = useState(false)
-
-    const [filesList, setFilesList] = useState([])
-    const [filesDisplayable, setFilesDisplayable] = useState([])
-    const [filesFavIndex, setFilesFavIndex] = useState(0)
 
     const reset = () => {
         setLabel('')
@@ -54,8 +48,6 @@ const ProductAdd = () => {
         setAtts([])
         setColls([])
         setFilesList([])
-        setFilesDisplayable([])
-        setFilesFavIndex(0)
     }
 
     const submit = () => {
@@ -67,33 +59,23 @@ const ProductAdd = () => {
             quantity: Number(quantity) || 0,
             atts: atts || {},
             colls: colls || {},
-            favImage: filesFavIndex
-        })
+        }, filesList)
             .then(productID => uploadProductImages(productID, filesList))
             .then(reset)
             .then(() => setLoading(false))
     }
 
-    const changeImages = e => {
-        const files = Array.from(e.target.files)
-        setFilesList(filesList.concat(files))
-        if (files) {
-            const filesArray = files.map(file => URL.createObjectURL(file))
-            setFilesDisplayable(filesDisplayable.concat(filesArray))
-            Array.from(files).map(file => URL.revokeObjectURL(file))
-        }
-    }
-
-    const removeImage = key => {
-        setFilesDisplayable(filesDisplayable.filter((item, index) => index !== key))
-        setFilesList(filesList.filter((item, index) => index !== key))
-    }
-
-
-
     const props = {
+        page: {
+            title: 'Product Creator',
+            nextProps: { style: { display: 'flex' } },
+            next: <>
+                <Button fill children='Reset' style={{ marginRight: 5 }} onClick={reset} />
+                <Button fill children='Submit' bg='success' onClick={submit} isLoading={loading} />
+            </>
+        },
         row: {
-            name: {
+            row1: {
 
             },
             description: {
@@ -104,82 +86,46 @@ const ProductAdd = () => {
             }
         },
         field: {
-            name: {
-                child: 'text',
-                value: label,
-                onChange: value => setLabel(value)
-            },
-            description: {
-                child: 'longText',
-                value: description,
-                onChange: value => setDescription(value)
-            },
-            price: {
-                child: 'number',
-                value: price,
-                onChange: value => setPrice(value),
-                className: 'mb-sm',
-                after: ' MAD'
-            },
-            quantity: {
-                child: 'number',
-                value: quantity,
-                onChange: value => setQuantity(value)
-            },
-            images: {
-                child: 'upload',
-                multiple: true,
-                onChange: changeImages
+            name: { child: 'text', hook: [label, setLabel] },
+            description: { child: 'longText', hook: [description, setDescription], className: 'mt-sm' },
+            price: { child: 'number', hook: [price, setPrice], className: 'mb-sm', before: 'Price', after: ' MAD' },
+            quantity: { child: 'number', hook: [quantity, setQuantity], before: 'Quantity' },
+            galleryUploader: {
+                hook: [filesList, files => setFilesList(files)],
+                multi: true, className: 'mt-sm',
+                actions: <IconButton size='sm' icon='star' />
             }
         },
-        rows: {
-            loading: loading,
-            vertical: false
-        },
-        fields: {
-            loading: loading,
-            block: true
-        }
-
+        rows: { loading: loading, vertical: true },
+        fields: { loading: loading, block: true }
     }
     return (
-        <Page
-            container
-            back
-            title='New attribute'
-            nextProps={{ style: { display: 'flex' } }}
-            next={
-                <>
-                    <Button fill children='Reset' style={{ marginRight: 5 }} onClick={reset} />
-                    <Button fill children='Submit' bg='success' onClick={submit} isLoading={loading} />
-                </>
-            }
-        >
-            <FormRow label='Name' {...props.rows} {...props.row.name}>
+        <Page {...props.page} >
+            <FormRow label='Name' {...props.rows} {...props.row.row1}>
                 <FormField  {...props.fields} {...props.field.name} />
-            </FormRow>
-            <FormRow label='Description' {...props.rows} {...props.row.description}>
                 <FormField {...props.fields}  {...props.field.description} />
+                <Uploader {...props.fields}  {...props.field.galleryUploader} />
             </FormRow>
-            <FormRow label='Images' {...props.rows}>
-                <FormField {...props.fields}  {...props.field.images} />
-                <div style={{ display: 'flex', flexWrap: 'wrap' }} className='mt-sm'>
-                    {filesDisplayable.map((file, key) => <div key={key} style={{ textAlign: 'center' }} className='mr-xxl'>
-                        <Avatar src={file} size='xxl' className='mb-sm' />
-                        <div style={{ display: 'flex', alignItems: 'center' }}>
-                            <Button size='sm' icon='fa-trash-alt' fill='ghost' theme='danger' onClick={() => removeImage(key)} />
-                            <Button size='sm' icon='fa-eye' fill='ghost' />
-                            <Button size='sm' icon='fa-star' fill='ghost' theme={key === filesFavIndex && 'primary'} onClick={() => setFilesFavIndex(key)} />
-                        </div>
-                    </div>)}
-                </div>
-            </FormRow>
-            <FormRow label='Price & Quantity' {...props.rows}>
+
+            <FormRow label='Selling' {...props.rows}>
                 <FormField {...props.fields}  {...props.field.price} />
                 <FormField {...props.fields}  {...props.field.quantity} />
             </FormRow>
 
-            <FormRow label='Collections' {...props.rows} vertical>
+            <FormRow label='Variations' {...props.rows} vertical>
+                {attributes.list.map((attribute, key) =>
+                    <FormRow key={key} vertical description={attribute.label} style={{ display: 'flex' }}>
+                        {attribute.children.map((variation, index) => <Chip
+                            key={index}
+                            className='mr-xs'
+                            text={variation.label}
+                            hook={[
+                                Object.keys(atts).includes(attribute.id) && atts[attribute.id].includes(variation.id),
+                                () => pickChild(attribute.id, variation.id, atts, setAtts)
+                            ]}
+                        />
+                        )}
+                    </FormRow>)}
                 {collections.list.map((collection, key) =>
                     <FormRow key={key} vertical description={collection.label} style={{ display: 'flex' }}>
                         {collection.children.map((child, index) =>
@@ -188,8 +134,8 @@ const ProductAdd = () => {
                                 className='mr-xs'
                                 text={child.label}
                                 hook={[
-                                    Object.keys(colls).includes(collection.collectionID) && colls[collection.collectionID].includes(child.id),
-                                    () => pickChild(collection.collectionID, child.id, colls, setColls)
+                                    Object.keys(colls).includes(collection.id) && colls[collection.id].includes(child.id),
+                                    () => pickChild(collection.id, child.id, colls, setColls)
                                 ]}
                             />
                         )}
@@ -197,22 +143,7 @@ const ProductAdd = () => {
             </FormRow>
 
             <FormRow label='Attributes' {...props.rows} vertical>
-                {attributes.list.map((attribute, key) =>
-                    <FormRow key={key} vertical description={attribute.label} style={{ display: 'flex' }}>
-                        {attribute.variations.map((variation, index) =>
 
-                            <Chip
-                                key={index}
-                                className='mr-xs'
-                                text={variation.label}
-                                hook={[
-                                    Object.keys(atts).includes(attribute.attributeID) && atts[attribute.attributeID].includes(variation.id),
-                                    () => pickChild(attribute.attributeID, variation.id, atts, setAtts)
-                                ]}
-                            />
-                        )}
-
-                    </FormRow>)}
             </FormRow>
 
 

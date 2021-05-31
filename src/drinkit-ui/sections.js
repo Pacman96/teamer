@@ -1,13 +1,13 @@
 import classNames from "classnames"
 import { useHistory } from "react-router"
-import {  IconButton } from "./clickers"
+import { IconButton } from "./clickers"
 
 
 export const Page = ({
     htmlTag,
     centered,
     container,
-    
+
 
     children,
     back = false,
@@ -29,22 +29,25 @@ export const Page = ({
     </div>
     return (
         <HtmlTag
-            className={classNames('page mt-xxl', { centered })}
+            className={classNames('page', { centered })}
             {...rootProps}
         >
-
-
             {
                 (title || next || back)
                 &&
-                <div className='head mb-xxl' >
-                    {(back || backProps) && <IconButton bg='light' className='mr-md' icon='angle-double-left' onClick={() => his.goBack()} />}
-                    {(title || titleProps) && <div className='title'>{title}</div>}
+                <div className='head mt-xxl' >
+                    {(back || backProps) && <IconButton bg='light' className='mr-md' size='s' icon='chevron-left' onClick={() => his.goBack()} />}
+                    {(title || titleProps) && <div className='title' {...titleProps}>{title}</div>}
                     {(next || nextProps) && <div {...nextProps}>{next}</div>}
                 </div>
             }
 
-          <div className='container' {...contentProps}>{children} </div>
+            <div {...contentProps} >
+
+                {children}
+
+
+            </div>
 
 
         </HtmlTag>

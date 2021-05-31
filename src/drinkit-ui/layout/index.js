@@ -65,7 +65,7 @@ export const LayoutProvider = ({
             )}>
                 <Sidebar  {...sidebarProps} />
                 <div className='mid-layout'>
-                    <Header  {...headerProps} />
+                    {headerProps?.visible && headerProps?.render}
                     {children}
                     <Footer {...footerProps} />
                 </div>

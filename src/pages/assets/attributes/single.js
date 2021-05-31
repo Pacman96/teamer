@@ -1,21 +1,21 @@
 import { useEffect, useState } from "react"
 import { useHistory, useParams } from "react-router"
-import { useAssets } from "../../api/assets"
-import { Button } from "../../drinkit-ui/cta"
-import { Page } from "../../drinkit-ui/sections"
+import { useAssets } from "../../../api/assets"
+import { Button } from "../../../drinkit-ui/cta"
+import { Page } from "../../../drinkit-ui/sections"
 
-const CollectionSingle = () => {
+const AttributeSingle = () => {
     const his = useHistory()
-    const { collections } = useAssets()
-    const {collectionID } = useParams()
+    const { attributes } = useAssets()
+    const { attributeID } = useParams()
     const [ready, setReady] = useState(false)
-    const [collection, setCollection] = useState()
+    const [attribute, setAttribute] = useState()
     const [editMode, setEditMode] = useState(false)
 
     useEffect(() => {
         setReady(false)
-        collections.get(collectionID).then(res => {
-            setCollection(res)
+        attributes.get(attributeID).then(res => {
+            setAttribute(res)
             setReady(true)
         })
     }, [])
@@ -24,15 +24,15 @@ const CollectionSingle = () => {
     const save = () => {
         setEditMode(false)
     }
-    const remove = () => collections.remove(collectionID).then(() => his.goBack())
+    const remove = () => attributes.remove(attributeID).then(() => his.goBack())
     return (
         <Page
             loading={!ready}
-            title={collection ? collection.label : 'Error getting collection'}
-            back={ready && collection}
+            title={attribute ? attribute.label : 'Error getting attribute'}
+            back={ready && attribute}
             nextProps={{ style: { display: 'flex' } }}
             next={
-                ready && collection &&
+                ready && attribute &&
                 <>
                     <Button fill theme='danger'
                         children='Remove'
@@ -59,4 +59,4 @@ const CollectionSingle = () => {
 }
 
 
-export default CollectionSingle
+export default AttributeSingle

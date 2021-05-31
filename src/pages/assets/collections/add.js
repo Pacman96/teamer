@@ -1,9 +1,9 @@
 import { useState } from "react"
-import { useAssets } from "../../api/assets"
-import { Group } from "../../drinkit-ui/base"
-import { Button, IconButton } from "../../drinkit-ui/clickers"
-import { FormField, FormRow } from "../../drinkit-ui/form"
-import { Page } from "../../drinkit-ui/sections"
+import { useAssets } from "../../../api/assets"
+import { Group } from "../../../drinkit-ui/base"
+import { Button, IconButton } from "../../../drinkit-ui/clickers"
+import { FormField, FormRow } from "../../../drinkit-ui/form"
+import { Page } from "../../../drinkit-ui/sections"
 
 
 const generateID = (ids) => {
@@ -47,11 +47,7 @@ const CollectionAdd = () => {
             </Group>
         },
         field: {
-            label: {
-                value: label,
-                onChange: value => setLabel(value),
-                loading: loading,
-            }
+            label: {   hook: [label, setLabel], loading: loading, }
         }
     }
 
@@ -64,9 +60,8 @@ const CollectionAdd = () => {
                 {variations.map((variation, key) => <Group key={variation?.id} className='mb-xs'>
                     <FormField
                         beforeProps={{ style: { fontWeight: 600 } }}
+                        hook={[variation?.label, value => changeVariation(key, value)]}
                         before={variation?.id}
-                        value={variation?.label}
-                        onChange={value => changeVariation(key, value)}
                         loading={loading}
                     />
                     <IconButton

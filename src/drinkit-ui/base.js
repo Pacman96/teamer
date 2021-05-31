@@ -3,9 +3,12 @@ import { cs } from "../utils/styling"
 
 
 export const Group = props => {
-    const { children, align , className} = props
+    const { children, align, className } = props
     return (
-        <div className={cs(props, ['all'], `group ${className || ' '}`)}>
+        <div
+            className={cs(props, ['all'], `group ${className || ' '}`)}
+            {...props}
+        >
             {children}
         </div>
     )

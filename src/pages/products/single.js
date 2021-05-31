@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useHistory, useParams } from "react-router"
-import { useAssets } from "../../api/assets"
+// import { useAssets } from "../../api/assets"
 import { useProducts } from "../../api/products"
 import { Button } from "../../drinkit-ui/cta"
 import { Page } from "../../drinkit-ui/sections"

@@ -1,5 +1,4 @@
 import classNames from 'classnames'
-import React from 'react'
 import { Block } from './base'
 
 export const Button = ({
@@ -38,7 +37,6 @@ export const Button = ({
             canDisabled={!isLocked}
             canLocked
             canHover
-
             isLoading={isLoading} isActive={isActive} isDisabled={isDisabled} isLocked={isLocked}
             style={{
                 ...style,

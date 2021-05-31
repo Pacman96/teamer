@@ -1,9 +1,9 @@
 import { useState } from "react"
-import { useAssets } from "../../api/assets"
-import { Group } from "../../drinkit-ui/base"
-import { Button, IconButton } from "../../drinkit-ui/clickers"
-import { FormField, FormRow, Input, Select } from "../../drinkit-ui/form"
-import { Page } from "../../drinkit-ui/sections"
+import { useAssets } from "../../../api/assets"
+import { Group } from "../../../drinkit-ui/base"
+import { Button, IconButton } from "../../../drinkit-ui/clickers"
+import { FormField, FormRow,} from "../../../drinkit-ui/form"
+import { Page } from "../../../drinkit-ui/sections"
 
 
 const generateID = (ids) => {
@@ -37,7 +37,7 @@ const AttributesAdd = () => {
     const add = () => setVariations([...variations, { id: generateID(variations.map(({ id }) => id)), label: '', payload: '' }])
     const submit = () => {
         setLoading(true)
-        attributes.add({ label, type, variations }).then(() => reset()).then(() => setLoading(false))
+        attributes.add({ label, type, children : variations }).then(() => reset()).then(() => setLoading(false))
     }
 
 
@@ -53,9 +53,10 @@ const AttributesAdd = () => {
         field: {
             label: {
                 value: label,
-                onChange: value => setLabel(value),
+                hook : [label, setLabel],
                 loading: loading,
-            }
+            },
+
         }
     }
     return (
@@ -69,13 +70,11 @@ const AttributesAdd = () => {
                     <FormField
                         beforeProps={{ style: { fontWeight: 600 } }}
                         before={variation?.id}
-                        value={variation?.label}
-                        onChange={value => changeVariation(key, value, 'label')}
+                        hook={[variation?.label, value => changeVariation(key, value, 'label')]}
                         loading={loading}
                     />
                     <FormField
-                        value={variation?.payload}
-                        onChange={value => changeVariation(key, value, 'payload')}
+                        hook={[variation?.payload, value => changeVariation(key, value, 'payload')]}
                         hidden={!type}
                         loading={loading}
                     />

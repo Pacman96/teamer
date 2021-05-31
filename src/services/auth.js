@@ -2,11 +2,13 @@ import { useEffect, useState, createContext, useContext, Suspense } from "react"
 import { Switch, Route, Redirect } from "react-router-dom";
 import fire from "firebase/app";
 
+
+import { Page } from "../drinkit-ui/components";
+
+
 import "firebase/auth";
 import "firebase/firestore";
 import "firebase/storage";
-import Page from "../drinkit-ui/sections";
-
 
 fire.initializeApp({
     apiKey: "AIzaSyC0REzlbGmfPBAHGDl2qZ_O_aZ27TkFZ2g",
@@ -72,34 +74,37 @@ export const AuthProvider = ({
         return unsubscribe;
     }, []);
 
-    const signup = (email = '', password = '', role = 'manager', authorizations = [], extraUserData = {}) => {
-        let promise = new Promise(function (resolve, reject) {
-            fireauth.createUserWithEmailAndPassword(email, password)
-                .then(({ user }) => {
-                    if (config.extraUserCollection) {
-                        const db_role = role || config.initialRole || '';
-                        const initialRoleAuthorizations = role ? config.rolesList.filter(i => i.value === db_role)[0].initialAuthorizations : []
-                        const db_authorizations = [
-                            ...authorizations,
-                            ...config.initialAuthorizations,
-                            ...initialRoleAuthorizations
-                        ]
-                        firebase.firestore().collection(config.extraUserCollection).doc(user.uid).set({
-                            role: db_role,
-                            authorizations: db_authorizations,
-                            ...extraUserData
-                        })
-                    }
-                    resolve(user)
-                })
-                .catch((error) => reject(error));
-        });
-        return promise;
-    };
+    const signup = (
+        email = '',
+        password = '',
+        role = 'manager',
+        authorizations = [],
+        extraUserData = {}
+    ) => new Promise(function (resolve, reject) {
+        fireauth.createUserWithEmailAndPassword(email, password)
+            .then(({ user }) => {
+                if (config.extraUserCollection) {
+                    const db_role = role || config.initialRole || '';
+                    const initialRoleAuthorizations = role ? config.rolesList.filter(i => i.value === db_role)[0].initialAuthorizations : []
+                    const db_authorizations = [
+                        ...authorizations,
+                        ...config.initialAuthorizations,
+                        ...initialRoleAuthorizations
+                    ]
+                    firebase.firestore().collection(config.extraUserCollection).doc(user.uid).set({
+                        role: db_role,
+                        authorizations: db_authorizations,
+                        ...extraUserData
+                    })
+                }
+                resolve(user)
+            })
+            .catch((error) => reject(error));
+    })
 
     const signin = (email, password) => {
         let promise = new Promise(function (resolve, reject) {
-            fireauth.signInWithEmailAndPassword(email, password)
+            firebase.auth().signInWithEmailAndPassword(email, password)
                 .then(({ user }) => resolve(user))
                 .catch((error) => reject(error));
         });
@@ -153,7 +158,7 @@ export const AuthProvider = ({
         isAuthorized
     };
 
-    console.log(value)
+    console.log("AUTH CONTEXT : ", value)
 
     return (
         <AuthContext.Provider value={value}>
@@ -173,21 +178,41 @@ export const Router = ({
         <PreWrapper>
             {top}
             <Switch>
-                {routes.map(({ id, title, path, component: Component, authenticated, roles, authorizations }) => {
+                {routes.map(({
+                    id,
+                    title, path,
+                    component: Component, left, right, top, bot, vertical,
+                    authenticated, roles, authorizations
+                }) => {
                     const shouldCheckRoles = (Array.isArray(roles) || typeof roles === 'string') && roles.length > 0
                     const shouldCheckAuthorizations = (Array.isArray(authorizations) || typeof authorizations === 'string') && authorizations.length > 0
                     const { next, code } = isAuthorized(roles, authorizations)
+
                     return <Route
                         key={id}
                         exact={true}
                         path={path}
                         render={(props) => (authenticated || shouldCheckRoles || shouldCheckAuthorizations) ? (
-                            next ? <Component props={props} /> :
+                            next ? <Page
+                                left={left}
+                                right={right}
+                                top={top}
+                                bot={bot}
+                                vertical={vertical}
+                                children={<Component props={props} />}
+                            /> :
                                 code === 401 ? <Redirect to={{ pathname: '/401', state: { title } }} /> :
                                     code === 403 ? <Redirect to={{ pathname: '/403', state: { title } }} /> :
                                         <Redirect to='/404' />
                         ) :
-                            <Component props={props} />
+                            <Page
+                                left={left}
+                                right={right}
+                                top={top}
+                                bot={bot}
+                                vertical={vertical}
+                                children={<Component props={props} />}
+                            />
                         }
                     />
                 })}
