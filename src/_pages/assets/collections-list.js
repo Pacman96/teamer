@@ -1,15 +1,15 @@
-
 import { useAssets } from "../../api/assets"
 import { useState } from "react"
-import { useTheme } from "../../drinkit-ui/apis/theme"
-import { Button } from "../../drinkit-ui/components"
-import { CollapsibleCard } from "../../drinkit-ui/components/CollapsibleCard"
-import { Box, Icon } from "../../drinkit-ui/components/base"
+import { Button, Text, CollapsibleCard, Box, Icon} from "../../drinkit-ui/components"
+import {   InputText } from "../../drinkit-ui/components/base"
 
-export const ItemChild = ({
+const ItemChild = ({
     initial,
-    isLast
+    isLast,
+    editMode,
 }) => {
+    const [label, setLabel] = useState(initial.label)
+
     return (
         <Box
             fullWidth
@@ -17,12 +17,16 @@ export const ItemChild = ({
             fill='filled'
             color='light2'
             paddings='5px 10px'
+            height='50px'
             style={{
                 borderBottomLeftRadius: isLast && 'inherit',
                 borderBottomRightRadius: isLast && 'inherit',
             }}
         >
-            {initial.label}
+            <Text style={{ width: 30 }} bold>{initial.id}</Text>
+            <InputText style={{ flex: 1, cursor: !editMode && 'inherit' }} value={initial.label} readOnly={!editMode} />
+            <Button visible={editMode} icon='trash' fill='text' color='danger' curve='cercle' style={{ marginLeft: 5 }} />
+            <Button visible={editMode} icon='edit' fill='text' color='dark' curve='cercle' style={{ marginLeft: 5 }} />
         </Box>
     )
 }
@@ -31,87 +35,103 @@ export const ItemChild = ({
 
 
 
-export const Item = ({
-    initial,
-    currentOpen,
-    onAttributeOpen,
-
-}) => {
-    const { theme } = useTheme()
+const Item = ({ initial, currentOpen, onOpen, onRemove }) => {
     const [editMode, setEditMode] = useState(false)
-    const [edited, setEdited] = useState(false)
+    const [item, setItem] = useState(initial)
 
+    const changed =
+        item.label !== initial.label ||
+        item.type !== initial.type ||
+        item.children?.length !== initial.children?.length
 
+    const undo = () => {
+        setItem(initial)
+        setEditMode(false)
+    }
 
     return <CollapsibleCard
         openOnHover
         defaultOpen={currentOpen}
-        onOpen={onAttributeOpen}
-        style={{ marginBottom: 10 }}
+        onOpen={onOpen}
+        onClose={() => setEditMode(false)}
+        style={{ marginBottom: 20 }}
 
         headColor='light'
-        headHeight='50px'
-        headPaddings='0 15px'
+        headHeight='55px'
+        headPaddings='0 20px'
         hideHeadRightOnClosed
 
         midColor='light2'
         midPaddings='0'
 
-        headLeft={
-            <Button
-                visible={editMode}
-                icon='trash'
-                style={{ marginRight: 10 }} size='s' curve='cercle' color='danger'
-            />
+        headContent={
+            <Box align='sb'>
+                <Text bold color={changed && 'warning'}>{item.label}</Text>
+                <Button
+                    visible={!editMode}
+                    before={<Icon style={{ marginRight: 5 }} fa='edit' />}
+                    text='Edit'
+                    fill={'text'}
+                    curve='round'
+                    color="dark"
+                    onClick={() => setEditMode(!editMode)}
+                    style={{ padding: 0, height: 'unset', width: 'unset' }}
+                />
+            </Box>
         }
-        headContent={initial.label}
         headRight={
             <>
                 <Button
-                    text='Edit mode'
-                    style={{ marginLeft: 10 }} size='s' curve='round' color={editMode ? 'secondary' : 'teritary'}
-                    onClick={() => setEditMode(!editMode)}
+                    icon='undo' visible={editMode}
+                    fill='text' color='dark'
+                    style={{ marginLeft: 5 }} curve='cercle'
+                    onClick={undo}
                 />
                 <Button
-                    visible={editMode}
-                    icon='plus'
-                    style={{ marginLeft: 10 }} size='s' curve='round' color='success'
+                    icon='trash' visible={editMode} curve='cercle'
+                    fill='text' color='danger'
+                    style={{ marginLeft: 5 }}
+                    onClick={() => onRemove(initial.id)}
+                />
+                <Button
+                    icon='plus' visible={editMode} curve='round'
+                    fill='text' color='success'
+                    style={{ marginLeft: 5 }}
                 />
             </>
         }
+        midContent={item?.children?.length > 0 && item?.children?.map((child, key) =>
+            <ItemChild
+                editMode={editMode}
+                initial={child}
+                key={key}
+                isLast={(key + 1) === item.children.length}
 
-        midContent={initial.children.map((child, key) => <ItemChild
-            initial={child}
-            key={key}
-            isLast={(key + 1) === initial.children.length}
-
-        />)}
+            />)}
         midVertical
     />
 }
 
-export const AssetsCollectionsPage = () => {
+
+
+export const Page_CollectionsList = () => {
     const { collections } = useAssets()
     const [selected, setSelected] = useState(0)
 
-    return <div>
-        <Box align='right' margins='0 0 10px'>
 
-            <Button
-                color='primary'
-                text='New collection'
-                curve='round'
-                before={<Icon fa='plus' style={{ marginRight: 10 }} />}
-            />
-        </Box>
-
-
+    return <div
+        style={{
+            width: '100%',
+            maxWidth: 650,
+            margin: '0 auto'
+        }}
+    >
         {collections.list.map((item, index) => <Item
             initial={item}
-            index={index}
-            currentOpen={selected === index}
-            onAttributeOpen={() => setSelected(index)}
+            currentOpen={selected === item.id}
+            onOpen={() => setSelected(item.id)}
+            onRemove={id => collections.remove(id)}
         />)}
     </div>
-    
+
 }

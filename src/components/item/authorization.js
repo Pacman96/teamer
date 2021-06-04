@@ -1,8 +1,9 @@
 import {  useState } from "react"
 import { useTeam } from "../../api/team"
+import { useAuth } from "../../drinkit-ui/apis/authentication-firebase"
 import { Block } from "../../drinkit-ui/base"
 import { Button } from "../../drinkit-ui/cta"
-import { useAuth } from "../../services/auth"
+
 
 export const AuthorizationItem = ({
     target,

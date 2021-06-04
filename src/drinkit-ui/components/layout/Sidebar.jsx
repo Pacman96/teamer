@@ -1,9 +1,8 @@
 import { useState } from 'react'
 import { useHistory, useLocation } from 'react-router'
 import styled from 'styled-components'
-import { useTheme } from '../apis/theme'
-import { Icon } from './base'
-
+import { Icon } from '..'
+import { useTheme } from '../../apis/theme'
 
 const Root = styled.div`
     min-width : ${props => {

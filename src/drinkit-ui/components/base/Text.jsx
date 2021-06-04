@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { useTheme } from '../apis/theme'
+import { useTheme } from '../../apis/theme'
 
 const TextProps = styled.span`
     color : ${props => props.theme.palette[props.color] || 'inherit'};
@@ -11,7 +11,7 @@ const TextProps = styled.span`
 
 `
 
-const Text = ({ size, bold, italic, underlined, deleted, ...rest }) => {
+const Text = ({color, size, bold, italic, underlined, deleted, ...rest }) => {
     const { theme } = useTheme()
     return <TextProps
         theme={theme}
@@ -19,6 +19,7 @@ const Text = ({ size, bold, italic, underlined, deleted, ...rest }) => {
         bold={bold}
         underlined={underlined}
         deleted={deleted}
+        color={color}
         {...rest}
     />
 }

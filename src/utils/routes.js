@@ -1,23 +1,30 @@
 import { lazy } from 'react';
-import Sidebar from '../drinkit-ui/components/Sidebar';
+import { navigation } from './navigation';
+import { Button, Sidebar, Box, Icon } from '../drinkit-ui/components';
+
+
+
+
 import { ProfilePage } from '../pages/profile';
 import { HomePage } from '../_pages/homepage';
-import { useAuth } from '../services/auth';
-import { navigation } from './navigation';
-import { Button, NavBar } from '../drinkit-ui/components';
-
-
 
 import { AssetsDashboardPage } from '../_pages/assets-dashboard';
-import { AssetsCollectionsPage } from '../_pages/assets/collections-list';
-import { AssetsAttributesPage } from '../_pages/assets/attributes-list';
-import { PageAttributeAdd } from '../_pages/assets/attribute-add';
-import { AssetesPreferencesPage } from '../_pages/assets/preferences-list';
+import { Page_AttributesList } from '../_pages/assets/attributes-list';
+import { Page_AttributeAdd } from '../_pages/assets/attribute-add';
+import { Page_CollectionsList } from '../_pages/assets/collections-list';
+import { Page_CollectionAdd } from '../_pages/assets/collection-add';
+import { Page_Preferences } from '../_pages/assets/preferences-list';
+
+import NotFound from '../pages/misc/NotFound';
+import Forbidden from '../pages/misc/Forbidden';
+import Unauthorized from '../pages/misc/Unauthorized';
+
+import Login from '../pages/auth/Login';
+import Register from '../pages/auth/Register';
+import { Playground } from '../PLAY';
 
 
-import { Box, Icon } from '../drinkit-ui/components/base';
-
-export const AssetsSidebar = () => <Sidebar
+const AssetsSidebar = () => <Sidebar
     defaultCollaped={false}
     collapsible={false}
     margins='0 20px 0 0'
@@ -31,86 +38,132 @@ export const AssetsSidebar = () => <Sidebar
 
 export const routes = [
     {
-        path: '/assets/preferences/add', authenticated: true, roles: 'manager',
-        left: <AssetsSidebar />, component: () => <AssetesPreferencesPage />,
+        path: '/assets/preferences',
+        content: Page_Preferences,
+        security: {
+            logged: true,
+            roles: ['manager'],
+        },
+        pageProps: { left: <AssetsSidebar /> },
+    },
+    {
+        path: '/assets/collections/add',
+        content: Page_CollectionAdd,
+        security: { logged: true, roles: ['manager'], },
+        pageProps: {
+            left: <AssetsSidebar />,
+            top: <Box margins='0 0 30px'>
+                <Button
+                    goBack
+                    color='dark'
+                    icon='chevron-left'
+                    curve='round'
+                />
+            </Box>
+        },
+    },
+    {
+        path: '/assets/collections',
+        content: Page_CollectionsList,
+        security: {
+            logged: true,
+            roles: ['manager'],
+        },
+        pageProps: {
+            left: <AssetsSidebar />,
+            top: <Box align='right' margins='0 0 30px'>
+                <Button
+                    path='/assets/collections/add'
+                    color='dark'
+                    text='New collection'
+                    curve='round'
+                    before={<Icon fa='plus' style={{ marginRight: 10 }} />}
+                />
+            </Box>
+        },
+    },
 
+    {
+        path: '/assets/attributes/add',
+        content: Page_AttributeAdd,
+        security: { logged: true, roles: ['manager'], },
+        pageProps: {
+            left: <AssetsSidebar />,
+            top: <Box margins='0 0 30px'>
+                <Button
+                    filled
+                    color='dark'
+                    icon='chevron-left'
+                    curve='round'
+                />
+            </Box>
+        },
     },
     {
-        path: '/assets/collections/add', authenticated: true, roles: 'manager',
-        left: <AssetsSidebar />, component: () => <AssetsCollectionsPage />,
-    },
-
-    {
-        path: '/assets/preferences/add', authenticated: true, roles: 'manager',
-        left: <AssetsSidebar />, component: () => <AssetesPreferencesPage />,
-    },
-    {
-        path: '/assets/collections', authenticated: true, roles: 'manager',
-        left: <AssetsSidebar />, component: () => <AssetsCollectionsPage />,
-    },
-    {
-        path: '/assets/attributes/add', authenticated: true, roles: 'manager',
-        left: <AssetsSidebar />, component: () => <PageAttributeAdd />,
-        top: <Box margins='0 0 30px'>
-            <Button
-                goBack
-                color='dark'
-                icon='chevron-left'
-                curve='round'
-            />
-        </Box>
+        path: '/assets/attributes',
+        content: Page_AttributesList,
+        security: {
+            logged: true,
+            roles: ['manager'],
+        },
+        pageProps: {
+            left: <AssetsSidebar />,
+            top: <Box align='right' margins='0 0 30px'>
+                <Button
+                    path='/assets/attributes/add'
+                    color='dark'
+                    text='New attribute'
+                    curve='round'
+                    before={<Icon fa='plus' style={{ marginRight: 10 }} />}
+                />
+            </Box>
+        },
     },
     {
-        path: '/assets/attributes', authenticated: true, roles: 'manager',
-        component: () => <AssetsAttributesPage />,
-        left: <AssetsSidebar />,
-        top: <Box align='right' margins='0 0 30px'>
-            <Button
-                path='/assets/attributes/add'
-                color='dark'
-                text='New attribute'
-                curve='round'
-                before={<Icon fa='plus' style={{ marginRight: 10 }} />}
-            />
-        </Box>
+        path: '/assets',
+        content: AssetsDashboardPage,
+        security: {},
+        pageProps: { left: <AssetsSidebar /> },
     },
     {
-        path: '/assets', authenticated: true, roles: 'manager',
-        left: <AssetsSidebar />, component: () => <AssetsDashboardPage />,
+        path: '/register',
+        content: Register,
+        security: {},
+        pageProps: {},
     },
     {
-        path: '/profile',
-        authenticated: false, roles: '', authorizations: '',
-        component: () => <ProfilePage />,
+        path: '/login',
+        content: Login,
+        security: {},
+        pageProps: {},
     },
     {
-        title: 'Registration page',
-        id: 'register', path: '/register', component: lazy(() => import('../pages/auth/Register')),
-        authenticated: false, roles: '', authorizations: ''
+        path: '/401',
+        content: Unauthorized,
+        security: {},
+        pageProps: {},
     },
     {
-        title: 'Login page',
-        id: 'login', path: '/login', component: lazy(() => import('../pages/auth/Login')),
-        authenticated: false, roles: '', authorizations: ''
+        path: '/403',
+        content: Forbidden,
+        security: {},
+        pageProps: {},
     },
     {
-        title: '',
-        id: '401', path: '/401', component: lazy(() => import('../pages/misc/Unauthorized')),
-        authenticated: false, roles: '', authorizations: ''
-    },
-    {
-        title: '',
-        id: '403', path: '/403', component: lazy(() => import('../pages/misc/Forbidden')),
-        authenticated: false, roles: '', authorizations: ''
+        path: '/play',
+        content: Playground,
+        security: {},
+        pageProps: { },
     },
     {
         path: '/',
-        authenticated: false, roles: '', authorizations: '',
-        component: () => <HomePage />,
+        content: HomePage,
+        security: {},
+        pageProps: {},
     },
     {
-        title: '',
-        id: '404', path: '', component: lazy(() => import('../pages/misc/NotFound')),
-        authenticated: false, roles: '', authorizations: ''
-    }
+        content: NotFound,
+        security: {},
+        pageProps: {},
+    },
 ]

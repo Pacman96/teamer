@@ -2,13 +2,14 @@ import { useState } from 'react'
 import { Redirect } from 'react-router'
 import { Page } from '../../drinkit-ui/sections'
 import { FormField } from '../../drinkit-ui/form'
-import { useAuth } from '../../services/auth'
+
 import { Button } from '../../drinkit-ui/cta'
+import { useAuth } from '../../drinkit-ui/apis/authentication-firebase'
 
 
 const RegisterPage = () => {
 
-    const { signup, user } = useAuth()
+    const { createUser, user } = useAuth()
 
     const [loading, setLoading] = useState(false)
 
@@ -19,22 +20,20 @@ const RegisterPage = () => {
     const submit = e => {
         e.preventDefault()
         setLoading(true)
-        signup(
-            email,
-            password,
-            'manager',
-            [],
-            {
-                firstName: '',
-                lastName: '',
-                phoneNumber: '',
-                city: '',
-                address: '',
-                avatar: '',
-                created: new Date(),
-                modified: new Date(),
-            })
-            .then(user => setLoading(false))
+        const credentials = { email, password }
+        const extra = {
+            role: 'manager',
+            authorizations: [],
+            firstName: '',
+            lastName: '',
+            phoneNumber: '',
+            city: '',
+            address: '',
+            avatar: '',
+            created: new Date(),
+            modified: new Date(),
+        }
+        createUser(credentials, extra).then(user => setLoading(false))
     }
 
     if (user) return <Redirect to={{

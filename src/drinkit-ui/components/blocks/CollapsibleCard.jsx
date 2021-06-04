@@ -1,10 +1,7 @@
 import styled from "styled-components"
-import { useAssets } from "../../api/assets"
-import { useHistory } from "react-router"
 import { useEffect, useState } from "react"
-import { useTheme } from "../../drinkit-ui/apis/theme"
-import { Icon } from "../../drinkit-ui/components/base"
-import { Button } from "../../drinkit-ui/components"
+import { useTheme } from "../../apis/theme"
+import { Icon } from "../"
 
 
 const ItemRoot = styled.div`
@@ -59,13 +56,16 @@ const HeadRight = styled.div`
     display: ${({ hidden }) => !hidden && 'flex'};
     align-items: center;
 `
-export const CollapsibleCard = ({
+const CollapsibleCard = ({
     hideHeadRightOnClosed,
     hideHeadLeftOnClosed,
 
 
     defaultOpen = false,
-    openOnHover = true,
+    openOnHover = false,
+    openOnClick = false,
+    togglerProps,
+    toggleOnHeadClick = false,
     onOpen,
     onClose,
     style,
@@ -73,7 +73,7 @@ export const CollapsibleCard = ({
 
     headHeight = '50px',
     headPaddings = '0 20px',
-    headColor = 'primary',
+    headColor = 'light',
     headContent = null,
     headRight = null,
     headLeft = null,
@@ -97,6 +97,7 @@ export const CollapsibleCard = ({
         setIsOpen(false)
         onClose && onClose()
     }
+    const toggle = () => isOpen ? close() : open()
 
     const rootProps = {
         onMouseEnter: () => openOnHover && open(),
@@ -128,7 +129,7 @@ export const CollapsibleCard = ({
     }, [isOpen])
     return (
         <ItemRoot {...rootProps}  >
-            <Head {...headProps} >
+            <Head {...headProps} onClick={() => toggleOnHeadClick && toggle()}>
                 <HeadLeft
                     hidden={!headLeft || (hideHeadLeftOnClosed && !isOpen)}
                     children={headLeft}
@@ -140,6 +141,14 @@ export const CollapsibleCard = ({
                     hidden={!headRight || (hideHeadRightOnClosed && !isOpen)}
                     children={headRight}
                 />
+                {
+                    openOnClick && <Icon
+                        fa={isOpen ? 'chevron-up' : 'chevron-down'}
+                        style={{ cursor: 'pointer' }}
+                        onClick={toggle}
+                        {...togglerProps}
+                    />
+                }
             </Head>
             <Mid  {...midProps}>
                 {midContent}
@@ -147,3 +156,6 @@ export const CollapsibleCard = ({
         </ItemRoot>
     )
 }
+
+
+export default CollapsibleCard

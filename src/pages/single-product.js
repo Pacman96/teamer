@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { firebase } from "../services/auth";
+
 import { useHistory, useParams } from "react-router";
 
 import { useAssets } from "../api/assets";
@@ -12,6 +12,7 @@ import { AttributesPicker, Availability, CheckoutProduct, QuantityPicker } from 
 import { Col, Grid, Row } from "react-flexbox-grid";
 import { FormField, FormRow } from "../drinkit-ui/form";
 import { pickChild_oa, selectChildren_oa } from "../utils/helpers";
+import { useFirebase } from "../drinkit-ui/apis/db-firebase";
 
 
 
@@ -22,7 +23,9 @@ function useSingleProduct() {
 }
 
 export const SingleProductProvider = ({ children }) => {
+
     const { productID } = useParams()
+    const {document } = useFirebase()
     const { getProductAssets, getProductsImages } = useProducts()
     const { attributes, collections } = useAssets()
 
@@ -51,7 +54,7 @@ export const SingleProductProvider = ({ children }) => {
     })
 
     useEffect(() => {
-        const unsubscribe = firebase.firestore().collection('products').doc(productID)
+        const unsubscribe = document('products',productID)
             .onSnapshot(async snapshot => {
                 if (snapshot.exists)
                     return formatProduct(snapshot).then(product => setProduct(product)).then(() => setReady(true))

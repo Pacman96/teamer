@@ -1,7 +1,7 @@
 import { useHistory } from 'react-router'
 import styled from 'styled-components'
-import { Button } from '.'
-import { useTheme } from '../apis/theme'
+import { Button } from '../index'
+import { useTheme } from '../../apis/theme'
 
 const Root = styled.footer`
     background-color: ${props => props.theme.palette[props.color]} ;

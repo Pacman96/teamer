@@ -1,7 +1,6 @@
 import { createContext, useEffect, useState, useContext } from 'react'
+import { useFirebase } from '../drinkit-ui/apis/db-firebase';
 import Page from '../drinkit-ui/sections';
-
-import { firebase } from '../services/auth'
 import { useAssets } from './assets';
 
 const ProductsContext = createContext();
@@ -33,6 +32,7 @@ const getProductAssets = (productAsset = {}, assetDatabase = []) => {
 };
 
 export const ProductsProvider = ({ children }) => {
+    const { documents, document, storage } = useFirebase()
     const [loading, setloading] = useState(true)
     const [products, setProducts] = useState([])
 
@@ -47,8 +47,8 @@ export const ProductsProvider = ({ children }) => {
 
     useEffect(() => {
         if (loadingAssets) return null
-        const unsubscribe = firebase.firestore().collection('products')
-            .onSnapshot(snapshot => {
+        const unsubscribe = documents('products').onSnapshot(
+            snapshot => {
                 let data = []
                 snapshot.forEach(async doc => {
                     const productID = doc.id
@@ -65,7 +65,7 @@ export const ProductsProvider = ({ children }) => {
 
     const getProductsImages = async (productID) => {
         let data = []
-        await firebase.storage().ref().child(`/products/${productID}`).listAll()
+        await storage.ref().child(`/products/${productID}`).listAll()
             .then(({ items }) => items.map(item => item.getDownloadURL().then(async url => await data.push(url))))
             .catch((error) => console.log(error));
         return data
@@ -73,7 +73,7 @@ export const ProductsProvider = ({ children }) => {
 
     const addProduct = (product, files = []) => {
         let promise = new Promise(function (resolve, reject) {
-            const ref = firebase.firestore().collection('products')
+            const ref = documents('products')
             ref.add({ ...product, images: [] })
                 .then(async doc => {
                     const productID = doc.id
@@ -102,7 +102,7 @@ export const ProductsProvider = ({ children }) => {
 
     function uploadImageAsPromise(productID, imageFile, name) {
         return new Promise(function (resolve, reject) {
-            var storageRef = firebase.storage().ref().child(`/products/${productID}/${name}`);
+            var storageRef = storage.ref().child(`/products/${productID}/${name}`);
             var task = storageRef.put(imageFile);
             //Update progress bar
             task.on('state_changed',
@@ -133,8 +133,7 @@ export const ProductsProvider = ({ children }) => {
     }
     const removeSingle = id => {
         let promise = new Promise(function (resolve, reject) {
-            firebase.firestore().collection('products')
-                .doc(id).delete()
+            document('products', id).delete()
                 .then((res) => resolve(res))
                 .catch((error) => reject(error));
         })

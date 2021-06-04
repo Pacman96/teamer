@@ -1,11 +1,11 @@
 import { Col, Grid, Row } from 'react-flexbox-grid'
-import Page from '../drinkit-ui/sections'
-import { useAuth } from '../services/auth'
+
 import { Group } from '../drinkit-ui/base'
 import { Button, SwitchClicker } from '../drinkit-ui/clickers'
 import { useState } from 'react'
 import { FormField, FormRow } from '../drinkit-ui/form'
 import { cities } from '../utils/database'
+import { useAuth } from '../drinkit-ui/apis/authentication-firebase'
 
 
 

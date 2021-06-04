@@ -1,7 +1,8 @@
 import { useState, useRef } from 'react'
 import { useTeam } from '../../api/team'
+import { useAuth } from '../../drinkit-ui/apis/authentication-firebase'
 import Page from '../../drinkit-ui/sections'
-import { useAuth } from '../../services/auth'
+
 
 
 const AddMemberPage = () => {

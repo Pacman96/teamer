@@ -3,8 +3,9 @@ import { createContext, useEffect, useState, useContext } from 'react'
 import Header from './header';
 import Sidebar from './sidebar';
 import Footer from './footer';
-import { useAuth } from '../../services/auth';
+
 import classNames from 'classnames';
+import { useAuth } from '../apis/authentication-firebase';
 
 const LayoutContext = createContext();
 

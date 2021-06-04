@@ -1,11 +1,9 @@
 import { useAssets } from "../../api/assets"
 import { useState } from "react"
-import { useTheme } from "../../drinkit-ui/apis/theme"
-import { Button, Text } from "../../drinkit-ui/components"
-import { CollapsibleCard } from "../../drinkit-ui/components/CollapsibleCard"
-import { Box, Icon, InputText } from "../../drinkit-ui/components/base"
+import { Button, Text, CollapsibleCard, Box, Icon } from "../../drinkit-ui/components"
+import { InputText } from "../../drinkit-ui/components/base"
 
-export const AttributeChild = ({
+const ItemChild = ({
     initial,
     isLast,
     editMode,
@@ -35,19 +33,19 @@ export const AttributeChild = ({
 
 
 
-
-
-export const Item = ({
-    initial,
-    currentOpen,
-    onOpen,
-    remove
-}) => {
-    const { theme } = useTheme()
+const Item = ({ initial, currentOpen, onOpen, onRemove }) => {
     const [editMode, setEditMode] = useState(false)
-    const [edited, setEdited] = useState(false)
+    const [item, setItem] = useState(initial)
 
+    const changed =
+        item.label !== initial.label ||
+        item.type !== initial.type ||
+        item.children?.length !== initial.children?.length
 
+    const undo = () => {
+        setItem(initial)
+        setEditMode(false)
+    }
 
     return <CollapsibleCard
         openOnHover
@@ -66,10 +64,11 @@ export const Item = ({
 
         headContent={
             <Box align='sb'>
-                <Text bold>{initial.label}</Text>
+                <Text bold color={changed && 'warning'}>{item.label}</Text>
                 <Button
                     visible={!editMode}
-                    icon="edit"
+                    before={<Icon style={{ marginRight: 5 }} fa='edit' />}
+                    text='Edit'
                     fill={'text'}
                     curve='round'
                     color="dark"
@@ -84,12 +83,13 @@ export const Item = ({
                     icon='undo' visible={editMode}
                     fill='text' color='dark'
                     style={{ marginLeft: 5 }} curve='cercle'
+                    onClick={undo}
                 />
                 <Button
                     icon='trash' visible={editMode} curve='cercle'
                     fill='text' color='danger'
                     style={{ marginLeft: 5 }}
-                    onClick={() => remove(initial.id)}
+                    onClick={() => onRemove(initial.id)}
                 />
                 <Button
                     icon='plus' visible={editMode} curve='round'
@@ -98,24 +98,24 @@ export const Item = ({
                 />
             </>
         }
+        midContent={item?.children?.length > 0 && item?.children?.map((child, key) =>
+            <ItemChild
+                editMode={editMode}
+                initial={child}
+                key={key}
+                isLast={(key + 1) === item.children.length}
 
-        midContent={initial.children.map((child, key) => <AttributeChild
-            editMode={editMode}
-            initial={child}
-            key={key}
-            isLast={(key + 1) === initial.children.length}
-
-        />)}
+            />)}
         midVertical
     />
 }
 
 
 
-export const AssetsAttributesPage = () => {
+export const Page_AttributesList = () => {
     const { attributes } = useAssets()
     const [selected, setSelected] = useState(0)
-    const remove = id => attributes.remove(id)
+
 
     return <div
         style={{
@@ -128,7 +128,7 @@ export const AssetsAttributesPage = () => {
             initial={item}
             currentOpen={selected === item.id}
             onOpen={() => setSelected(item.id)}
-            remove={remove}
+            onRemove={id => attributes.remove(id)}
         />)}
     </div>
 

@@ -1,14 +1,7 @@
 import { createContext, useEffect, useState, useContext, Suspense } from 'react'
+import { useAuth } from '../drinkit-ui/apis/authentication-firebase';
+import { useFirebase } from '../drinkit-ui/apis/db-firebase';
 import { Page } from '../drinkit-ui/sections';
-import { firebase } from '../services/auth'
-
-/**
- *  SHOP PREFERENCES 
- *  -> handle creation
- *  docs :
- *      'branding' : {
- *       }
- */
 
 
 
@@ -18,31 +11,6 @@ const AssetsContext = createContext();
 export function useAssets() {
     return useContext(AssetsContext)
 }
-
-
-
-
-
-const getLogoURL = () => new Promise(function (resolve, reject) {
-    firebase.storage().ref().child('shop').child('branding').child(`logo`)
-        .then((url) => resolve(url))
-        .catch((error) => reject(error));
-})
-
-const uploadBrandLogoAsPromise = (file) => new Promise(function (resolve, reject) {
-    var storageRef = firebase.storage().ref().child(`/shop/branding/logo`);
-    var task = storageRef.put(file);
-    task.on('state_changed',
-        function progress() {
-        },
-        function error(err) {
-            reject(err)
-        },
-        function complete() {
-            storageRef.getDownloadURL().then(url => resolve(url))
-        }
-    );
-});
 
 
 export const AssetsProvider = ({ children }) => {
@@ -56,8 +24,33 @@ export const AssetsProvider = ({ children }) => {
 
     const loading = loadingAttributes || loadingCollections || loadingShopPrefs
 
+    const { storage, document, documents } = useFirebase()
+
+    const getLogoURL = () => new Promise(function (resolve, reject) {
+        storage.ref().child('shop').child('branding').child(`logo`)
+            .then((url) => resolve(url))
+            .catch((error) => reject(error));
+    })
+
+    const uploadBrandLogoAsPromise = (file) => new Promise(function (resolve, reject) {
+        var storageRef = storage.ref().child(`/shop/branding/logo`);
+        var task = storageRef.put(file);
+        task.on('state_changed',
+            function progress() {
+            },
+            function error(err) {
+                reject(err)
+            },
+            function complete() {
+                storageRef.getDownloadURL().then(url => resolve(url))
+            }
+        );
+    });
+
+
+
     useEffect(() => {
-        const unsubscribe = firebase.firestore().collection('attributes').onSnapshot(snapshot => {
+        const unsubscribe = documents('attributes')?.onSnapshot(snapshot => {
             let data = []
             snapshot.forEach(doc => data.push({ id: doc.id, ...doc.data() }))
             setAttributes(data)
@@ -67,7 +60,7 @@ export const AssetsProvider = ({ children }) => {
     }, [])
 
     useEffect(() => {
-        const unsubscribe = firebase.firestore().collection('collections').onSnapshot(snapshot => {
+        const unsubscribe = documents('collections')?.onSnapshot(snapshot => {
             let data = []
             snapshot.forEach(doc => data.push({ id: doc.id, ...doc.data() }))
             setCollections(data)
@@ -77,7 +70,7 @@ export const AssetsProvider = ({ children }) => {
     }, [])
 
     useEffect(() => {
-        const unsubscribe = firebase.firestore().collection('shop').onSnapshot(snapshot => {
+        const unsubscribe = documents('shop')?.onSnapshot(snapshot => {
             snapshot.forEach(doc => {
                 if (doc.id === 'branding') setBranding(doc.data())
             })
@@ -88,11 +81,7 @@ export const AssetsProvider = ({ children }) => {
 
 
     const addSingle = (coll, id, item) => new Promise(function (resolve, reject) {
-        firebase.firestore().collection(coll)
-            .doc(id)
-            .set(item)
-            .then((res) => resolve(res))
-            .catch((error) => reject(error));
+        document(coll, id).set(item).then((res) => resolve(res)).catch((error) => reject(error));
     })
 
     const getSingle = (db, id) => new Promise(function (resolve, reject) {
@@ -104,8 +93,7 @@ export const AssetsProvider = ({ children }) => {
         }
     })
     const removeSingle = (coll, id) => new Promise(function (resolve, reject) {
-        firebase.firestore().collection(coll)
-            .doc(id).delete()
+        document(coll, id).delete()
             .then((res) => resolve(res))
             .catch((error) => reject(error));
     })
@@ -115,11 +103,11 @@ export const AssetsProvider = ({ children }) => {
     const updateBranding = (branding = {}, files = []) => new Promise(function (resolve, reject) {
         if (files.length > 0)
             return uploadBrandLogoAsPromise(files[0])
-                .then(url => firebase.firestore().collection('shop').doc('branding').update({ ...branding, brandLogoURL: url }))
+                .then(url => document('shop', 'branding').update({ ...branding, brandLogoURL: url }))
                 .then((res) => resolve(res))
                 .catch((error) => reject(error))
         else
-            return firebase.firestore().collection('shop').doc('branding').update({ ...branding })
+            return document('shop', 'branding').update({ ...branding })
                 .then((res) => resolve(res))
                 .catch((error) => reject(error));
     })

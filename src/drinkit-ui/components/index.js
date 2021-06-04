@@ -1,19 +1,32 @@
+import Text from './base/Text'
+import Icon from './base/Icon'
+import Box from './base/Box'
 
-import Button from './Button'
-import Text from './Text'
+import CollapsibleCard from './blocks/CollapsibleCard'
 
-import Main from './Main'
-import Footer from './Footer'
-import NavBar from './NavBar'
-import Page from './Page'
+import Button from './buttons/Button'
+
+import Main from './layout/Main'
+import Footer from './layout/Footer'
+import NavBar from './layout/NavBar'
+import Page from './layout/Page'
+import Sidebar from './layout/Sidebar'
 
 
 
 export {
-    Button,
     Text,
+    Icon,
+    Box,
+
+    CollapsibleCard,
+
+    Button,
+
     Main,
     Footer,
     NavBar,
-    Page
+    Page,
+    Sidebar,
+
 }

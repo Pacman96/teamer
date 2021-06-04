@@ -1,27 +1,12 @@
 import { useState } from 'react'
 import { useHistory } from 'react-router'
 import styled, { css } from 'styled-components'
-import { Button } from '.'
-import { useTheme } from "../apis/theme"
+import { Box, Button } from '../'
+import { useTheme } from "../../apis/theme"
 
 const defaultHeight = '60px'
 
-const Root = styled.header`
-    position: ${props => props.fixed ? 'absolute' : 'relative'};
-    background-color:${props => props.theme.palette[props.color]};
-    color:${props => props.theme.palette.contrast[props.color]};
-    z-index: 1;
-    height: ${props => props.height || defaultHeight};
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    ${props => props.fixed &&
-        css`
-          top: 0;
-          left:0;
-          right: 0; 
-        `};
-`
+
 const Logo = styled.div`
     cursor: pointer;
     display: flex;
@@ -57,11 +42,6 @@ const Items = styled.nav`
     }
 
 `
-const Toggler = styled(Button)`
-    @media screen and (min-width: ${props => props.theme.bp.m}){
-        display: none;
-    }
-`
 const Item = styled.li`
     cursor: pointer;
     padding: 0 10px;
@@ -82,11 +62,15 @@ const ItemLabel = styled.div`
 `
 const Actions = styled.div`
     display: flex;
+    align-items: center;
+
 `
 export const NavBar = ({
     template = 1,
-    color = 'secondary',
+    backgroundColor = 'dark',
+    togglerColor = '',
     fixed,
+    height = defaultHeight,
 
     visible = true,
 
@@ -96,48 +80,65 @@ export const NavBar = ({
 
     ...rest
 }) => {
-    const { theme } = useTheme()
     const his = useHistory()
     const [collapsed, setCollapsed] = useState(true)
 
-    const globalProps = { theme, template, ...rest }
+    const Root = ({ children }) => <Box
+        as='header'
+        height={height}
+        background={{ color: backgroundColor }}
+        direction='h'
+        position={{ type: fixed ? 'absolute' : 'relative', top: '0', left: '0', right: '0' }}
+    >
+        {children}
+    </Box>
+    const hamburger = <Button
+        iconOnly={collapsed ? 'bars' : 'cross'}
+        height={height}
+        width={height}
+        filled size='l'
+        color={togglerColor}
+        curve='square'
+        onClick={() => setCollapsed(!collapsed)}
+        l={{
+            hidden: true
+        }}
+    />
+    const navigation = <Box
+        direction='h'
+        align='center'
+        style={{ flex: 1 }}
+        children='Menu'
+    />
+    const $actions = <Box
+        direction='h'
+        children={actions}
+    />
+    const $logo = <Box
+        onClick={() => his.push('/')}
+        align='center'
+        direction='h'
+        children={logo}
+    />
 
-    const rootProps = { ...globalProps, color, fixed, collapsed }
-    const togglerProps = {
-        ...globalProps,
-        onClick: () => setCollapsed(!collapsed),
-        fullHeight: true,
-        fill: 'text',
-        size: 'l',
-        icon: 'bars',
-        color: 'light2'
-    }
-    const logoProps = { ...globalProps, children: logo, onClick: () => his.push('/') }
-    const itemsProps = { ...globalProps, color, collapsed }
-    const actionsProps = { ...globalProps, children: actions }
+    // const navigation = <Items {...itemsProps}>
+    //     {items.length > 0 && items.map((item, key) => {
+    //         const onClick = () => {
+    //             item.path && his.push(item.path)
+    //             item.click && item.click()
+    //             setCollapsed(true)
+    //         }
+    //         return <Item key={key} onClick={onClick} >
+    //             <ItemIcon children={item.icon} />
+    //             <ItemLabel children={item.label} />
+    //         </Item>
+    //     })}
+    // </Items>
 
-    const hamburger = <Toggler  {...togglerProps} />
 
-    const navigation = <Items {...itemsProps}>
-        {items.length > 0 && items.map((item, key) => {
-            const onClick = () => {
-                item.path && his.push(item.path)
-                item.click && item.click()
-                setCollapsed(true)
-            }
-            return <Item key={key} onClick={onClick} >
-                <ItemIcon children={item.icon} />
-                <ItemLabel children={item.label} />
-            </Item>
-        })}
-    </Items>
-
-    const $actions = <Actions {...actionsProps} />
-
-    const $logo = <Logo {...logoProps} />
 
     if (template === 1)
-        return <Root {...rootProps}>
+        return <Root >
             {hamburger}
             {$logo}
             {navigation}
@@ -145,7 +146,7 @@ export const NavBar = ({
         </Root>
 
     if (template === 2)
-        return <Root {...rootProps}>
+        return <Root >
             {hamburger}
             {navigation}
             {$actions}
@@ -153,7 +154,7 @@ export const NavBar = ({
         </Root>
 
     if (template === 3)
-        return <Root {...rootProps}>
+        return <Root >
             {hamburger}
             {$logo}
             {navigation}
@@ -161,7 +162,7 @@ export const NavBar = ({
         </Root>
 
     return (
-        <Root {...rootProps}>
+        <Root >
             Please choose a template
         </Root>
     )

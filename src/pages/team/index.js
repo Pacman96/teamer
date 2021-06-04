@@ -5,7 +5,8 @@ import Page from "../../lib/layout/page"
 import Carousel from "../../lib/carousel"
 import Block from "../../lib/block"
 import { useTeam } from "../../api/team"
-import { useAuth } from "../../services/auth"
+import { useAuth } from "../../drinkit-ui/apis/authentication-firebase"
+
 
 const Avatar = ({ onClick, selected, username }) => {
     return (

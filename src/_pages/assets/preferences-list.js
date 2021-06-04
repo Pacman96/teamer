@@ -1,7 +1,19 @@
-export const AssetesPreferencesPage = () => {
+import { Text } from "../../drinkit-ui/components"
+import { CollapsibleCard } from "../../drinkit-ui/components"
+
+export const Page_Preferences = () => {
     return (
-        <div>
-            prefs
-        </div>
+        <CollapsibleCard
+            openOnClick
+            defaultOpen
+            toggleOnHeadClick
+            headContent={<Text bold children='Branding' />}
+            midContent={
+                <>
+                  
+
+                </>
+            }
+       />
     )
 }

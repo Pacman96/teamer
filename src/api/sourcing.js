@@ -1,5 +1,6 @@
 import { createContext, useEffect } from 'react'
-import { firebase } from '../services/auth'
+import { useFirebase } from '../drinkit-ui/apis/db-firebase';
+
 
 const SourcingContext = createContext();
 
@@ -8,12 +9,13 @@ export function useSourcing() {
 }
 
 export const SourcingProvider = () => {
+    const { documents } = useFirebase()
     const [loading, setloading] = useState(true)
     const [suppliers, setSuppliers] = useState([])
 
     const getSupplies = supplierID => {
         let promise = new Promise(function (resolve, reject) {
-            firebase.firestore().collection('supplies').where('supplierID', '==', supplierID).get()
+            documents('supplies').where('supplierID', '==', supplierID).get()
                 .then(docs => {
                     let supplies = []
                     docs.forEach(doc => supplies.push({ supplyID: doc.id, ...doc.data() }))
@@ -25,7 +27,7 @@ export const SourcingProvider = () => {
     }
 
     useEffect(() => {
-        const unsubscribe = firebase.firestore().collection('suppliers').onSnapshot(snapshot => {
+        const unsubscribe = documents('suppliers').onSnapshot(snapshot => {
             let data = []
             snapshot.forEach(doc => {
                 getSupplies(doc.id).then(supplies => data.push({

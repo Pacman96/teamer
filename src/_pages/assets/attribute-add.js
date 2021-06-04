@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react"
 import { useAssets } from "../../api/assets"
-import { Button } from "../../drinkit-ui/components"
-import { Box } from "../../drinkit-ui/components/base"
+import { Button , Box} from "../../drinkit-ui/components"
 import { FormField, FormRow } from "../../drinkit-ui/form"
 import { generateID } from "../../utils/helpers"
 
-
-export const PageAttributeAdd = () => {
+export const Page_AttributeAdd = () => {
     const { attributes } = useAssets()
     const [variations, setVariations] = useState([])
     const [label, setLabel] = useState('')

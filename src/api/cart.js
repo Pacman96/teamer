@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState, useContext, Suspense } from 'react'
 import { Page } from '../drinkit-ui/sections';
-import { firebase, useAuth } from '../services/auth'
+import { useAuth } from '../drinkit-ui/apis/authentication-firebase';
+import { useFirebase } from '../drinkit-ui/apis/db-firebase';
 
 const CartContext = createContext();
 

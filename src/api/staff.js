@@ -1,19 +1,16 @@
 import { createContext, useEffect, useState, useContext } from 'react'
-import { firebase, useAuth } from '../services/auth'
+import { useAuth } from '../drinkit-ui/apis/authentication-firebase';
+import { useFirebase } from '../drinkit-ui/apis/db-firebase';
 
-// import fire from "firebase/app";
-
-import "firebase/auth";
-import "firebase/firestore";
-
-const StaffContext = createContext();
+const Context = createContext();
 
 export function useStaff() {
-    return useContext(StaffContext)
+    return useContext(Context)
 }
 
 export const StaffProvider = ({ children }) => {
     const { user } = useAuth()
+    const { documents } = useFirebase()
 
     const [loading, setLoading] = useState(true)
 
@@ -27,7 +24,7 @@ export const StaffProvider = ({ children }) => {
     const get = {
         suppliers: () => {
             let promise = new Promise(function (resolve, reject) {
-                firebase.firestore().collection('suppliers').get().then(docs => {
+                documents('suppliers').get().then(docs => {
                     let data = []
                     docs.forEach(doc => data.push({ supplierID: doc.id, ...doc.data() }))
                     resolve(data)
@@ -38,7 +35,7 @@ export const StaffProvider = ({ children }) => {
         },
         managers: () => {
             let promise = new Promise(function (resolve, reject) {
-                firebase.firestore().collection('profiles').where('role', '==', 'manager').get()
+                documents('profiles').where('role', '==', 'manager').get()
                     .then(docs => {
                         let data = []
                         docs.forEach(doc => data.push({ managerID: doc.id, ...doc.data() }))
@@ -135,9 +132,9 @@ export const StaffProvider = ({ children }) => {
     console.log('STAFF :', value)
 
     return (
-        <StaffContext.Provider value={value}>
+        <Context.Provider value={value}>
             {!loading && children}
-        </StaffContext.Provider>
+        </Context.Provider>
     );
 }
 

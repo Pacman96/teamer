@@ -15,6 +15,13 @@ const defaultTheme = {
         pri: "'Cairo', sans-serif",
         sec: '',
     },
+    borders: {
+        curved: '8px',
+        curved2: '14px',
+        square: '0px',
+        round: '50px',
+        cercle: '100%',
+    },
     palette: {
         primary: '#185adb',
         secondary: '#ffc947',
@@ -87,23 +94,6 @@ const getCurrentTheme = (themes = [], ls = 'theme') => {
 }
 const selectTheme = (themeLabel = '', ls = 'theme') => localStorage.setItem(ls, themeLabel)
 
-const GlobalStyle = createGlobalStyle`
-    @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900 &display=swap');
-
-    * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-    }
-    :root {
-        font-size: 16px;
-        font-family: 'Tajawal', sans-serif;
-    }
-    body {
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-    }
-`
 
 
 
@@ -115,6 +105,64 @@ export const ThemeProvider = ({
     const [ready, setReady] = useState(false)
     const [theme, setTheme] = useState(defaultTheme)
 
+    const GlobalStyle = createGlobalStyle`
+    @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900 &display=swap');
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+    :root {
+        font-size: 16px;
+        font-family: 'Tajawal', sans-serif;
+        background-color: ${theme.palette.light3} ;
+        overflow-y: auto;
+    }
+    body {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    input,
+    textarea,
+    select,
+    button {
+        color: inherit;
+        background-color: inherit;
+        font: unset;
+        outline: unset;
+        padding: 0;
+        border: unset;
+        width: unset;
+        flex: 1;
+    }
+    textarea {
+        min-height: 80px;
+    }
+    input[type="file"]::-webkit-file-upload-button {
+        visibility: hidden;
+        display: none;
+    }
+    input[type="file"] {
+        opacity: 0;
+        position: absolute;
+    }
+    input[type="file"] {
+        opacity: 0;
+        position: absolute;
+    }
+    
+    ::-webkit-scrollbar { 
+        width: 0.5rem;
+     }
+     ::-webkit-scrollbar-track {
+        background: ${theme.palette.teritary};
+    }
+    ::-webkit-scrollbar-thumb {
+        background: ${theme.palette.secondary};
+    }
+`
     useEffect(() => {
         const current = getCurrentTheme([defaultTheme, ...config?.themes], config?.ls)
         setTheme(current)
@@ -127,7 +175,7 @@ export const ThemeProvider = ({
         }}
     >
         <GlobalStyle />
-        {loading && !ready ? (loading || 'Loading') : children}
+        {(loading && !ready) ? (loading || 'Loading') : children}
     </Context.Provider>
 
 }
